@@ -1,0 +1,65 @@
+.leaderboard-screen {
+  padding: 30px;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(135deg, #1e1e2f, #2a2a40); /* dark gradient */
+  min-height: 100vh;
+}
+
+.leaderboard-screen h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #ffd700; /* golden heading */
+}
+
+.leaderboard-table {
+  width: 80%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.05); /* glassy effect */
+  border-radius: 12px;
+  overflow: hidden;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 1rem;
+}
+
+.leaderboard-table th {
+  background: rgba(0, 0, 0, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.leaderboard-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.leaderboard-table tr:hover {
+  background: rgba(255, 215, 0, 0.2); /* golden hover effect */
+  transition: 0.3s;
+}
+
+.back-btn {
+  margin-top: 20px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: #45b7d1;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.back-btn:hover {
+  background: #3093aa;
+}
+
+

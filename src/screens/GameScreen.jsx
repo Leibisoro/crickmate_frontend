@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./GameScreen.css";
 
-const GameScreen = ({ onAction, gameSettings }) => {
+const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
   const { overs = 1, wicketsLimit = 1, batOrBowl = "bat" } = {
     overs: gameSettings?.overs || 1,
     wicketsLimit: gameSettings?.wickets || 1,
@@ -457,7 +457,21 @@ const GameScreen = ({ onAction, gameSettings }) => {
               {inning === 1 ? (
                 <button onClick={startSecondInnings}>Start Second Innings</button>
               ) : (
-                <button onClick={() => alert("Game Over → Show Result Screen")}>
+                <button
+                  onClick={() =>
+                    onGameComplete({
+                      resultType:
+                        playerScore > computerScore
+                          ? "victory"
+                          : playerScore < computerScore
+                          ? "lose"
+                          : "draw",
+                      playerScore,
+                      computerScore,
+                      winMargin: Math.abs(playerScore - computerScore),
+                    })
+                  }
+                >
                   Show Result
                 </button>
               )}
@@ -470,11 +484,6 @@ const GameScreen = ({ onAction, gameSettings }) => {
 };
 
 export default GameScreen;
-
-
-
-
-
 
 
 
