@@ -484,6 +484,3 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
 };
 
 export default GameScreen;
-
-
-
