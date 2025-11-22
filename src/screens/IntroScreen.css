@@ -1,5 +1,5 @@
 .intro-screen {
-  background: url("/images/intro.png") no-repeat center center;
+  background: url("/intro.png") no-repeat center center;
   background-size: cover; /* ✅ full screen image without distortion */
   height: 100vh;
   width: 100vw;
