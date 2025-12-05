@@ -122,7 +122,7 @@ export default function MultiplayerGameScreen({ onAction, gameSettings, onGameCo
     <div
       className="game-screen"
       style={{
-        backgroundImage: "url('/images/gameplay.png')",
+        backgroundImage: "url('/src/assets/images/gameplay.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -188,7 +188,7 @@ export default function MultiplayerGameScreen({ onAction, gameSettings, onGameCo
           <AnimatePresence>
             {player1Hand && (
               <motion.div initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -100, opacity: 0 }} transition={{ duration: 0.4 }}>
-                <img src={`/images/handfinger${player1Hand}.png`} alt={`P1 hand ${player1Hand}`} className="hand-img"/>
+                <img src={`/src/assets/images/handfinger${player1Hand}.png`} alt={`P1 hand ${player1Hand}`} className="hand-img"/>
                 <motion.div className="hand-msg player-msg glow-text-enhanced" initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>{player1Msg || player1Name}</motion.div>
                 <div className="hand-badge">{player1Name}</div>
               </motion.div>
@@ -205,7 +205,7 @@ export default function MultiplayerGameScreen({ onAction, gameSettings, onGameCo
             {[1,2,3,4,5,6].map((n) => (
               <div className="ball-slot" key={n}>
                 <motion.button className="number-ball-btn" onClick={() => handlePick(n)} disabled={buttonsDisabled} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <motion.img src="/images/ball1.png" alt="ball" className="ball-img-enhanced"
+                  <motion.img src="/src/assets/images/ball1.png" alt="ball" className="ball-img-enhanced"
                     animate={flyingBall === n ? { y: -300, scale: 1.8, rotate: 1080, opacity: 0 } : { y: 0, scale: 1, rotate: 0, opacity: 1 }} transition={{ duration: 1.2, ease: "easeInOut" }}/>
                   <span className="ball-number-label">{n}</span>
                 </motion.button>
@@ -227,7 +227,7 @@ export default function MultiplayerGameScreen({ onAction, gameSettings, onGameCo
           <AnimatePresence>
             {player2Hand && (
               <motion.div initial={{ x: 100, opacity: 0 }} animate={{ x:0, opacity:1 }} exit={{ x:100, opacity:0 }} transition={{ duration: 0.4 }}>
-                <img src={`/images/handfinger${player2Hand}.png`} alt={`P2 hand ${player2Hand}`} className="hand-img"/>
+                <img src={`/src/assets/images/handfinger${player2Hand}.png`} alt={`P2 hand ${player2Hand}`} className="hand-img"/>
                 <motion.div className="hand-msg computer-msg glow-text-enhanced" initial={{ scale:0.6, opacity:0 }} animate={{ scale:1, opacity:1 }}>{player2Msg || player2Name}</motion.div>
                 <div className="hand-badge">{player2Name}</div>
               </motion.div>

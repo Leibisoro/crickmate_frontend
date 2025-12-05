@@ -48,10 +48,10 @@ const ResultScreen = ({
 
   const getCenterpieceImage = () => {
     switch (resultType) {
-      case 'victory': return '/images/trophy.png';
-      case 'lose': return '/images/sad.png';
-      case 'draw': return '/images/scale.png';
-      default: return '/images/trophy.png';
+      case 'victory': return '/src/assets/images/trophy.png';
+      case 'lose': return '/src/assets/images/sad.png';
+      case 'draw': return '/src/assets/images/scale.png';
+      default: return '/src/assets/images/trophy.png';
     }
   };
 
@@ -222,4 +222,3 @@ const ResultScreen = ({
 };
 
 export default ResultScreen;
-

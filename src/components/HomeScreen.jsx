@@ -6,7 +6,7 @@ export default function HomeScreen({ onAction }) {
     <div className="home-container">
       <div className="glow-background"></div>
 
-      <img src="/images/mecrick.png" alt="girl character" className="girl-left" />
+      <img src="/src/assets/images/mecrick.png" alt="girl character" className="girl-left" />
 
       <div className="buttons-home">
         <button onClick={() => onAction("toss")} className="btn-home glow-btn">

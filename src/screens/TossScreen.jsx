@@ -70,14 +70,14 @@ export default function TossScreen({ onAction, setGameSettings }) {
       </div>
 
       {/* Background */}
-      <img src="/images/night.png" alt="background" className="toss-background" />
+      <img src="/src/assets/images/night.png" alt="background" className="toss-background" />
 
       {/* Stadium Lights */}
-      <img src="/images/stadiumlight.png" alt="light left" className="toss-light-left" />
-      <img src="/images/stadiumlight1.png" alt="light right" className="toss-light-right" />
+      <img src="/src/assets/images/stadiumlight.png" alt="light left" className="toss-light-left" />
+      <img src="/src/assets/images/stadiumlight1.png" alt="light right" className="toss-light-right" />
 
       {/* Stumps */}
-      <img src="/images/stumps1.png" alt="stumps" className="toss-stumps" />
+      <img src="/src/assets/images/stumps1.png" alt="stumps" className="toss-stumps" />
 
       {/* Step 0: Match Settings */}
       {step === 0 && (
@@ -146,7 +146,7 @@ export default function TossScreen({ onAction, setGameSettings }) {
               whileTap={{ scale: 0.9 }}
               onClick={() => handleChoice("odd")}
             >
-              <img src="/images/ball1.png" alt="ball" className="toss-ball-img" />
+              <img src="/src/assets/images/ball1.png" alt="ball" className="toss-ball-img" />
               <span className="toss-ball-text">ODD</span>
             </motion.div>
             <motion.div
@@ -155,7 +155,7 @@ export default function TossScreen({ onAction, setGameSettings }) {
               whileTap={{ scale: 0.9 }}
               onClick={() => handleChoice("even")}
             >
-              <img src="/images/ball1.png" alt="ball" className="toss-ball-img" />
+              <img src="/src/assets/images/ball1.png" alt="ball" className="toss-ball-img" />
               <span className="toss-ball-text">EVEN</span>
             </motion.div>
           </div>
@@ -175,7 +175,7 @@ export default function TossScreen({ onAction, setGameSettings }) {
                 whileTap={{ scale: 0.9 }}
                 onClick={() => handleNumber(num)}
               >
-                <img src="/images/ball1.png" alt="ball" className="toss-ball-img" />
+                <img src="/src/assets/images/ball1.png" alt="ball" className="toss-ball-img" />
                 <span className="toss-number-text">{num}</span>
               </motion.div>
             ))}
@@ -196,7 +196,7 @@ export default function TossScreen({ onAction, setGameSettings }) {
                 initial={{ x: -200, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
               >
-                <img src="/images/ball1.png" alt="ball" className="toss-ball-img" />
+                <img src="/src/assets/images/ball1.png" alt="ball" className="toss-ball-img" />
                 <span className="toss-result-number">{userNumber}</span>
               </motion.div>
             </div>
@@ -224,7 +224,7 @@ export default function TossScreen({ onAction, setGameSettings }) {
                 initial={{ x: 200, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
               >
-                <img src="/images/ball1.png" alt="ball" className="toss-ball-img" />
+                <img src="/src/assets/images/ball1.png" alt="ball" className="toss-ball-img" />
                 <span className="toss-result-number">{aiNumber}</span>
               </motion.div>
             </div>
@@ -267,13 +267,13 @@ export default function TossScreen({ onAction, setGameSettings }) {
               <h2 className="toss-title">Choose to Bat or Bowl</h2>
               <div className="toss-choice-images">
                 <img
-                  src="/images/batsman1.png"
+                  src="/src/assets/images/batsman1.png"
                   alt="Bat"
                   className={`choice-img ${selectedBatBowl === "bat" ? "selected" : ""}`}
                   onClick={() => handleBatBowlChoice("bat")}
                 />
                 <img
-                  src="/images/baller1.png"
+                  src="/src/assets/images/baller1.png"
                   alt="Bowl"
                   className={`choice-img ${selectedBatBowl === "bowl" ? "selected" : ""}`}
                   onClick={() => handleBatBowlChoice("bowl")}
@@ -283,7 +283,7 @@ export default function TossScreen({ onAction, setGameSettings }) {
               {selectedBatBowl && (
                 <>
                   <img
-                    src={`/images/${selectedBatBowl === "bat" ? "batsman1.png" : "baller1.png"}`}
+                    src={`/src/assets/images/${selectedBatBowl === "bat" ? "batsman1.png" : "baller1.png"}`}
                     alt="highlight"
                     className="highlight-img"
                   />

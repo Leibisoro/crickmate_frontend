@@ -124,10 +124,10 @@ export default function MultiplayerScreen({ onAction }) {
   // UI ===============================
   return (
     <div className="multiplayer-container">
-      <img src="/images/background2.png" className="background" />
+      <img src="/src/assets/images/background2.png" className="background" />
 
-      <img src="/images/stadiumlight.png" className="stadium-lights-left" />
-      <img src="/images/stadiumlight1.png" className="stadium-lights-right" />
+      <img src="/src/assets/images/stadiumlight.png" className="stadium-lights-left" />
+      <img src="/src/assets/images/stadiumlight1.png" className="stadium-lights-right" />
 
       <button
         className="login-btn"

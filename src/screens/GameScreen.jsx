@@ -167,7 +167,7 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
   return (
     <div
       className="game-screen"
-      style={{ backgroundImage: "url('/images/gameplay.png')" }}
+      style={{ backgroundImage: "url('/src/assets/images/gameplay.png')" }}
     >
       {/* Rules Modal */}
       <AnimatePresence>
@@ -288,7 +288,7 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
                 transition={{ duration: 0.5 }}
               >
                 <img
-                  src={`/images/handfinger${playerHand}.png`}
+                  src={`/src/assets/images/handfinger${playerHand}.png`}
                   alt={`Player hand ${playerHand}`}
                   className="hand-img"
                 />
@@ -319,7 +319,7 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
                   whileTap={{ scale: 0.95 }}
                 >
                   <motion.img
-                    src="/images/ball1.png"
+                    src="/src/assets/images/ball1.png"
                     alt="ball"
                     className="ball-img-enhanced"
                     animate={
@@ -411,7 +411,7 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
                 transition={{ duration: 0.5 }}
               >
                 <img
-                  src={`/images/handfinger${computerHand}.png`}
+                  src={`/src/assets/images/handfinger${computerHand}.png`}
                   alt={`Computer hand ${computerHand}`}
                   className="hand-img"
                 />
