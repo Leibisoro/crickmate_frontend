@@ -1,90 +1,138 @@
+/* MAIN SCREEN */
 .intro-screen {
-  background-size: cover; /* ✅ full screen image without distortion */
   height: 100vh;
   width: 100vw;
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* left side */
-  padding-left: 100px; /* thoda andar shift */
+  justify-content: flex-start;
+  padding-left: 80px;
   position: relative;
   overflow: hidden;
+  background: #0b3e02;
 }
 
-/* Stadium glow effect */
-.stadium-glow {
+/* 🌱 Realistic Cricket Grass Pattern */
+.intro-screen::before {
+  content: "";
   position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120%;
-  height: 200px;
-  background: radial-gradient(circle, rgba(255,255,200,0.6) 0%, transparent 70%);
-  filter: blur(60px);
-  pointer-events: none;
+  inset: 0;
+  background: repeating-linear-gradient(
+      90deg,
+      rgba(20, 80, 20, 0.35) 0px,
+      rgba(30, 100, 30, 0.35) 40px
+  );
+  opacity: 0.7;
   z-index: 1;
 }
 
+/* Smooth grass shimmer */
+.intro-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% -20%, rgba(255,255,255,0.2), transparent 60%);
+  animation: grassShine 10s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes grassShine {
+  0% { opacity: 0.3; transform: translateY(0); }
+  50% { opacity: 0.6; transform: translateY(20px); }
+  100% { opacity: 0.3; transform: translateY(0); }
+}
+
+/* 🌫 Soft stadium fog */
+.stadium-fog {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 20%, rgba(255,255,255,0.15), transparent 70%);
+  filter: blur(30px);
+  animation: fogFloat 7s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+@keyframes fogFloat {
+  0% { opacity: 0.35; }
+  100% { opacity: 0.55; }
+}
+
+/* 🔦 Moving stadium spotlights */
+.spotlight-left,
+.spotlight-right {
+  position: absolute;
+  top: -20%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, rgba(255,255,220,0.45) 0%, transparent 70%);
+  filter: blur(80px);
+  z-index: 1;
+  animation: lightsMove 6s ease-in-out infinite alternate;
+}
+
+.spotlight-left { left: -10%; transform: rotate(-25deg); }
+.spotlight-right { right: -10%; transform: rotate(25deg); }
+
+@keyframes lightsMove {
+  0% { opacity: 0.4; transform: translateY(0); }
+  100% { opacity: 0.7; transform: translateY(40px); }
+}
+
+/* CONTENT ------------------------------------------ */
 .intro-content {
   position: relative;
-  z-index: 2;
-  text-align: left;
+  z-index: 3;
+ text-align: left;
 }
 
-/* CrickMate glowing wave */
+/* TITLE */
 .game-title {
-  font-size: 6rem; /* bada title */
+  font-size: 5.5rem;
   font-weight: 900;
-  background: linear-gradient(
-    90deg,
-    #ff6b6b,
-    #ffd93d,
-    #6bcfff,
-    #9dff6b,
-    #ff6b6b
-  );
-  background-size: 300%; /* wave ke liye */
-  background-clip: text;
+  background: linear-gradient(90deg, #ffef9f, #ffcc00, #ffffff, #ffef9f);
+  background-size: 300%;
   -webkit-background-clip: text;
   color: transparent;
-  -webkit-text-fill-color: transparent;
-
-  margin-bottom: 60px; /* title aur button ke beech gap */
-
-  animation: glowWave 5s linear infinite; /* glowing wave animation */
+  animation: titleGlow 4s linear infinite;
+  letter-spacing: 3px;
+  text-shadow: 0px 0px 25px rgba(255,220,100,0.6);
 }
 
-@keyframes glowWave {
-  0% {
-    background-position: 0% 50%;
-    text-shadow: 0 0 30px rgba(255, 215, 0, 0.8),
-                 0 0 60px rgba(255, 215, 0, 0.6);
-  }
-  50% {
-    background-position: 100% 50%;
-    text-shadow: 0 0 40px rgba(0, 191, 255, 0.8),
-                 0 0 70px rgba(0, 191, 255, 0.6);
-  }
-  100% {
-    background-position: 0% 50%;
-    text-shadow: 0 0 30px rgba(255, 215, 0, 0.8),
-                 0 0 60px rgba(255, 215, 0, 0.6);
-  }
+@keyframes titleGlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-/* Play button */
+/* PLAY BUTTON */
 .play-btn {
-  font-size: 2rem; /* bada button */
-  padding: 18px 40px;
+  margin-top: 40px;
+  font-size: 2.2rem;
+  padding: 18px 50px;
   border: none;
   border-radius: 50px;
-  background: linear-gradient(90deg, #ff6b6b, #ffd93d);
+  background: linear-gradient(90deg, #e63946, #ffb703);
   color: #fff;
   cursor: pointer;
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
-  transition: all 0.3s ease;
+  font-weight: bold;
+  box-shadow: 0 0 25px rgba(255,150,0,0.7);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .play-btn:hover {
   transform: scale(1.15);
-  box-shadow: 0 0 40px rgba(255, 215, 0, 1);
+  box-shadow: 0 0 40px rgba(255,180,0,1);
+}
+
+/* Small devices */
+@media (max-width: 768px) {
+  .game-title {
+    font-size: 3.5rem;
+  }
+  .play-btn {
+    font-size: 1.6rem;
+    padding: 15px 35px;
+  }
+  .intro-screen {
+    padding-left: 30px;
+  }
 }
