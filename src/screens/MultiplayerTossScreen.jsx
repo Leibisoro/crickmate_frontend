@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import "./TossScreen.css";
 
+// IMPORT ALL IMAGES HERE
+import ground from "../assets/images/ground.png";
+import ball from "../assets/images/ball1.png";
+import batsmanImg from "../assets/images/batsman1.png";
+import bowlerImg from "../assets/images/baller1.png";
+
 export default function TossScreen({ onAction, setGameSettings }) {
   const [step, setStep] = useState(0);
   const [choice, setChoice] = useState(null);
@@ -13,7 +19,6 @@ export default function TossScreen({ onAction, setGameSettings }) {
   const [wickets, setWickets] = useState(null);
   const [selectedBatBowl, setSelectedBatBowl] = useState(null);
 
-  // Get player names from localStorage
   const [player1Name, setPlayer1Name] = useState("Player 1");
   const [player2Name, setPlayer2Name] = useState("Player 2");
 
@@ -30,71 +35,53 @@ export default function TossScreen({ onAction, setGameSettings }) {
   };
 
   const handleNumber = (num) => {
-    const player2Num = Math.floor(Math.random() * 6) + 1;
-    const sum = num + player2Num;
+    const p2 = Math.floor(Math.random() * 6) + 1;
+    const sum = num + p2;
     const outcome = sum % 2 === 0 ? "even" : "odd";
 
     const won = outcome === choice;
     setPlayer1Won(won);
-    setPlayer2Number(player2Num);
+    setPlayer2Number(p2);
 
-    if (won) {
-      setResult(`${player1Name} won the toss! 🎉`);
-    } else {
-      setResult(`${player2Name} won the toss! 🎉`);
-    }
+    setResult(won ? `${player1Name} won the toss! 🎉` : `${player2Name} won! 🎉`);
 
     setPlayer1Number(num);
     setStep(3);
   };
 
-  // helper: validate settings before continuing
   const validateSettings = () => {
     if (!overs || !wickets) {
-      alert("Please choose Overs and Wickets before continuing.");
+      alert("Choose Overs & Wickets first.");
       return false;
     }
     return true;
   };
 
-  // centralized continuation → build settings object, store names locally, call setGameSettings (App will route to multiplayer game)
-  const continueToMultiplayerMatch = (finalBatOrBowl) => {
+  const continueToMultiplayerMatch = (final) => {
     if (!validateSettings()) return;
 
-    // Save nicer player names to localStorage (if not already present)
-    const hostName = localStorage.getItem("hostName") || player1Name || "Player 1";
-    const guestName = localStorage.getItem("guestName") || player2Name || "Player 2";
-    localStorage.setItem("player1Name", hostName);
-    localStorage.setItem("player2Name", guestName);
+    localStorage.setItem("player1Name", player1Name);
+    localStorage.setItem("player2Name", player2Name);
 
-    // Build settings payload — IMPORTANT include mode:'multiplayer'
     const settings = {
       overs,
       wickets,
-      batOrBowl: finalBatOrBowl,
+      batOrBowl: final,
       mode: "multiplayer",
     };
 
-    // This prop is wired in App.jsx to start the multiplayer game and set screen to "game"
     setGameSettings(settings);
-
-    // optional small UX pause then (App will change the screen; we don't call onAction('game') here)
-    console.log("Multiplayer match started with settings:", settings);
   };
 
   const handleBatBowlChoice = (pick) => {
     setSelectedBatBowl(pick);
-
-    // Use the centralized continuation helper so App gets mode: 'multiplayer'
     continueToMultiplayerMatch(pick);
   };
 
-  // When player2 is the toss winner (AI/opponent) and we auto-decide for them
   const handleAutoDecideForPlayer2 = () => {
     const pick = Math.random() > 0.5 ? "bat" : "bowl";
     setSelectedBatBowl(pick);
 
-    // show a little delay for UX so player sees "Player 2 decided..."
     setTimeout(() => {
       continueToMultiplayerMatch(pick);
     }, 700);
@@ -102,7 +89,7 @@ export default function TossScreen({ onAction, setGameSettings }) {
 
   return (
     <div className="toss-container">
-      {/* Animated Stars */}
+      {/* Stars */}
       <div className="toss-stars">
         {[...Array(50)].map((_, i) => (
           <div
@@ -117,57 +104,50 @@ export default function TossScreen({ onAction, setGameSettings }) {
         ))}
       </div>
 
-      {/* Background - Updated to ground.png */}
-      <img src="/src/assets/images/ground.png" alt="background" className="toss-background" />
+      {/* FIXED IMAGE PATH */}
+      <img src={ground} alt="background" className="toss-background" />
 
-      {/* Step 0: Match Settings */}
+      {/* STEP 0 - SETTINGS */}
       {step === 0 && (
         <div className="toss-step1">
           <h2 className="toss-title">Choose Overs & Wickets</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
-            {/* Overs */}
-            <div>
-              <h3 className="toss-title">Overs</h3>
-              <div className="toss-ball-buttons">
-                {[1, 3, 5].map((o) => (
-                  <motion.button
-                    key={o}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className={`toss-setting-btn ${overs === o ? "selected" : ""}`}
-                    onClick={() => setOvers(o)}
-                  >
-                    {o}
-                  </motion.button>
-                ))}
-              </div>
-            </div>
 
-            {/* Wickets */}
-            <div>
-              <h3 className="toss-title">Wickets</h3>
-              <div className="toss-ball-buttons">
-                {[1, 3, 5].map((w) => (
-                  <motion.button
-                    key={w}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className={`toss-setting-btn ${wickets === w ? "selected" : ""}`}
-                    onClick={() => setWickets(w)}
-                  >
-                    {w}
-                  </motion.button>
-                ))}
-              </div>
-            </div>
+          {/* OVERS */}
+          <h3 className="toss-title">Overs</h3>
+          <div className="toss-ball-buttons">
+            {[1, 3, 5].map((o) => (
+              <motion.button
+                key={o}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className={`toss-setting-btn ${overs === o ? "selected" : ""}`}
+                onClick={() => setOvers(o)}
+              >
+                {o}
+              </motion.button>
+            ))}
+          </div>
+
+          {/* WICKETS */}
+          <h3 className="toss-title" style={{ marginTop: 30 }}>Wickets</h3>
+          <div className="toss-ball-buttons">
+            {[1, 3, 5].map((w) => (
+              <motion.button
+                key={w}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className={`toss-setting-btn ${wickets === w ? "selected" : ""}`}
+                onClick={() => setWickets(w)}
+              >
+                {w}
+              </motion.button>
+            ))}
           </div>
 
           {overs && wickets && (
             <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
               className="toss-proceed-btn"
-              style={{ marginTop: "40px" }}
+              whileHover={{ scale: 1.1 }}
               onClick={() => setStep(1)}
             >
               Confirm & Do Toss
@@ -176,7 +156,7 @@ export default function TossScreen({ onAction, setGameSettings }) {
         </div>
       )}
 
-      {/* Step 1: Odd/Even */}
+      {/* STEP 1 - ODD EVEN */}
       {step === 1 && (
         <div className="toss-step1">
           <h2 className="toss-title">{player1Name}, Choose Odd or Even</h2>
@@ -184,39 +164,38 @@ export default function TossScreen({ onAction, setGameSettings }) {
             <motion.div
               className="toss-cricket-ball"
               whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
               onClick={() => handleChoice("odd")}
             >
-              <img src="/src/assets/images/ball1.png" alt="ball" className="toss-ball-img" />
+              <img src={ball} className="toss-ball-img" />
               <span className="toss-ball-text">ODD</span>
             </motion.div>
+
             <motion.div
               className="toss-cricket-ball"
               whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
               onClick={() => handleChoice("even")}
             >
-              <img src="/src/assets/images/ball1.png" alt="ball" className="toss-ball-img" />
+              <img src={ball} className="toss-ball-img" />
               <span className="toss-ball-text">EVEN</span>
             </motion.div>
           </div>
         </div>
       )}
 
-      {/* Step 2: Number Selection */}
+      {/* STEP 2 - NUMBER PICK */}
       {step === 2 && (
         <div className="toss-step2">
-          <h2 className="toss-title">Pick a Number (1–6)</h2>
+          <h2 className="toss-title">Pick a Number (1-6)</h2>
+
           <div className="toss-number-balls">
             {[1, 2, 3, 4, 5, 6].map((num) => (
               <motion.div
                 key={num}
                 className="toss-number-ball"
                 whileHover={{ scale: 1.15 }}
-                whileTap={{ scale: 0.9 }}
                 onClick={() => handleNumber(num)}
               >
-                <img src="/src/assets/images/ball1.png" alt="ball" className="toss-ball-img" />
+                <img src={ball} className="toss-ball-img" />
                 <span className="toss-number-text">{num}</span>
               </motion.div>
             ))}
@@ -224,141 +203,88 @@ export default function TossScreen({ onAction, setGameSettings }) {
         </div>
       )}
 
-      {/* Step 3: Result Animation */}
+      {/* STEP 3 - SHOW RESULT */}
       {step === 3 && (
         <div className="toss-step3">
           <div className="toss-battle-arena">
-            {/* Player 1 */}
+            {/* PLAYER 1 */}
             <div className="toss-player-side">
               <div className="toss-avatar">🧑‍🦱</div>
               <div className="toss-player-label">{player1Name}</div>
-              <motion.div
-                className="toss-result-ball toss-slide-right"
-                initial={{ x: -200, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-              >
-                <img src="/src/assets/images/ball1.png" alt="ball" className="toss-ball-img" />
+
+              <motion.div className="toss-result-ball" animate={{ opacity: 1 }}>
+                <img src={ball} className="toss-ball-img" />
                 <span className="toss-result-number">{player1Number}</span>
               </motion.div>
             </div>
 
-            {/* Center */}
+            {/* CENTER */}
             <div className="toss-calculation">
               <div className="toss-calc-line">
-                <span className="toss-calc-number">{player1Number}</span>
-                <span className="toss-calc-plus">+</span>
-                <span className="toss-calc-number">{player2Number}</span>
-                <span className="toss-calc-equals">=</span>
-                <span className="toss-calc-sum">{player1Number + player2Number}</span>
+                {player1Number} + {player2Number} = {player1Number + player2Number}
               </div>
               <div className="toss-calc-result">
                 ({(player1Number + player2Number) % 2 === 0 ? "Even" : "Odd"})
               </div>
             </div>
 
-            {/* Player 2 */}
+            {/* PLAYER 2 */}
             <div className="toss-ai-side">
               <div className="toss-avatar">👱🏾</div>
               <div className="toss-ai-label">{player2Name}</div>
-              <motion.div
-                className="toss-result-ball toss-slide-left"
-                initial={{ x: 200, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-              >
-                <img src="/src/assets/images/ball1.png" alt="ball" className="toss-ball-img" />
+
+              <motion.div className="toss-result-ball" animate={{ opacity: 1 }}>
+                <img src={ball} className="toss-ball-img" />
                 <span className="toss-result-number">{player2Number}</span>
               </motion.div>
             </div>
           </div>
 
-          <div className="toss-final-result">
-            {player1Won ? (
-              <>
-                <h1 className="toss-win-text">{player1Name} Won the Toss 🎉</h1>
-                {[...Array(20)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="toss-sparkle"
-                    style={{
-                      left: `${Math.random() * 100}%`,
-                      top: `${Math.random() * 100}%`,
-                      animationDelay: `${Math.random()}s`,
-                    }}
-                  ></div>
-                ))}
-              </>
-            ) : (
-              <>
-                <h1 className="toss-lose-text">{player2Name} Won the Toss 🎉</h1>
-                {[...Array(20)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="toss-sparkle"
-                    style={{
-                      left: `${Math.random() * 100}%`,
-                      top: `${Math.random() * 100}%`,
-                      animationDelay: `${Math.random()}s`,
-                    }}
-                  ></div>
-                ))}
-              </>
-            )}
-          </div>
+          <h1 className={player1Won ? "toss-win-text" : "toss-lose-text"}>
+            {player1Won ? `${player1Name} Won the Toss 🎉` : `${player2Name} Won the Toss 🎉`}
+          </h1>
 
-          <div className="toss-action-buttons">
-            <button className="toss-proceed-btn" onClick={() => setStep(4)}>
-              Next
-            </button>
-          </div>
+          <button className="toss-proceed-btn" onClick={() => setStep(4)}>
+            Next
+          </button>
         </div>
       )}
 
-      {/* Step 4: Bat/Bowl Choice */}
+      {/* STEP 4 - BAT OR BOWL */}
       {step === 4 && (
         <div className="toss-step1">
           {player1Won ? (
             <>
               <h2 className="toss-title">{player1Name}, Choose to Bat or Bowl</h2>
+
               <div className="toss-choice-images">
                 <img
-                  src="/src/assets/images/batsman1.png"
+                  src={batsmanImg}
                   alt="Bat"
                   className={`choice-img ${selectedBatBowl === "bat" ? "selected" : ""}`}
                   onClick={() => handleBatBowlChoice("bat")}
                 />
+
                 <img
-                  src="/src/assets/images/baller1.png"
+                  src={bowlerImg}
                   alt="Bowl"
                   className={`choice-img ${selectedBatBowl === "bowl" ? "selected" : ""}`}
                   onClick={() => handleBatBowlChoice("bowl")}
                 />
               </div>
-
-              {selectedBatBowl && (
-                <>
-                  <img
-                    src={`/src/assets/images/${selectedBatBowl === "bat" ? "batsman1.png" : "baller1.png"}`}
-                    alt="highlight"
-                    className="highlight-img"
-                  />
-                  <p className="toss-title">Waiting for the next screen...</p>
-                </>
-              )}
             </>
           ) : (
             <>
               <h2 className="toss-title">{player2Name} is deciding...</h2>
-              <p className="toss-title">
-                {player2Name} chose to {Math.random() > 0.5 ? "Bat" : "Bowl"} first
-              </p>
+
+              <p className="toss-title">Choosing automatically...</p>
+
               <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
                 className="toss-proceed-btn"
-                style={{ marginTop: "40px" }}
+                whileHover={{ scale: 1.1 }}
                 onClick={handleAutoDecideForPlayer2}
               >
-                Continue to Match
+                Continue
               </motion.button>
             </>
           )}

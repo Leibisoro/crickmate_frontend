@@ -1,6 +1,11 @@
 import { useState } from "react";
 import "./MultiplayerScreen.css";
 
+// ✅ IMPORT IMAGES CORRECTLY
+import bg from "../assets/images/background2.png";
+import stadiumLightLeft from "../assets/images/stadiumlight.png";
+import stadiumLightRight from "../assets/images/stadiumlight1.png";
+
 export default function MultiplayerScreen({ onAction }) {
   // STATE ===============================
   const [showRoomPanel, setShowRoomPanel] = useState(false);
@@ -121,13 +126,14 @@ export default function MultiplayerScreen({ onAction }) {
       localStorage.setItem("player1Name", "Player 1");
   }
 
-  // UI ===============================
+  // =============================== UI ===============================
   return (
     <div className="multiplayer-container">
-      <img src="/src/assets/images/background2.png" className="background" />
 
-      <img src="/src/assets/images/stadiumlight.png" className="stadium-lights-left" />
-      <img src="/src/assets/images/stadiumlight1.png" className="stadium-lights-right" />
+      {/* ✅ FIXED IMAGES */}
+      <img src={bg} className="background" alt="bg" />
+      <img src={stadiumLightLeft} className="stadium-lights-left" alt="light-left" />
+      <img src={stadiumLightRight} className="stadium-lights-right" alt="light-right" />
 
       <button
         className="login-btn"
@@ -239,6 +245,7 @@ export default function MultiplayerScreen({ onAction }) {
             ✖ Leave Room
           </button>
 
+          {/* Force start for local testing */}
           <div style={{ marginTop: 12, textAlign: "center" }}>
             <button
               onClick={handleForceStartNow}

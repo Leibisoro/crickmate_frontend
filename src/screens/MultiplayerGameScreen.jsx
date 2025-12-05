@@ -1,16 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import "./GameScreen.css"; // reuse your existing styles
+import "./GameScreen.css";
 
-export default function MultiplayerGameScreen({ onAction, gameSettings, onGameComplete }) {
+// ✅ FIXED IMAGE IMPORTS
+import gameplayBg from "../assets/images/gameplay.png";
+import ball1 from "../assets/images/ball1.png";
+import hand1 from "../assets/images/handfinger1.png";
+import hand2 from "../assets/images/handfinger2.png";
+import hand3 from "../assets/images/handfinger3.png";
+import hand4 from "../assets/images/handfinger4.png";
+import hand5 from "../assets/images/handfinger5.png";
+import hand6 from "../assets/images/handfinger6.png";
+
+// Map hand images
+const handImages = {
+  1: hand1,
+  2: hand2,
+  3: hand3,
+  4: hand4,
+  5: hand5,
+  6: hand6,
+};
+
+export default function MultiplayerGameScreen({
+  onAction,
+  gameSettings,
+  onGameComplete,
+}) {
   // Player names
   const player1Name = localStorage.getItem("player1Name") || "Player 1";
   const player2Name = localStorage.getItem("player2Name") || "Player 2";
 
   // Game settings
-  const overs = Number(gameSettings?.overs ?? localStorage.getItem("selectedOvers")) || 1;
-  const wicketsLimit = Number(gameSettings?.wickets ?? localStorage.getItem("selectedWickets")) || 1;
-  const batOrBowl = gameSettings?.batOrBowl || localStorage.getItem("selectedBatOrBowl") || "bat";
+  const overs =
+    Number(gameSettings?.overs ?? localStorage.getItem("selectedOvers")) || 1;
+  const wicketsLimit =
+    Number(gameSettings?.wickets ?? localStorage.getItem("selectedWickets")) ||
+    1;
+  const batOrBowl =
+    gameSettings?.batOrBowl ||
+    localStorage.getItem("selectedBatOrBowl") ||
+    "bat";
 
   // State
   const [showRules, setShowRules] = useState(true);
@@ -33,8 +63,13 @@ export default function MultiplayerGameScreen({ onAction, gameSettings, onGameCo
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
   const [pickPhase, setPickPhase] = useState("batter");
 
-  const isPlayer1Batting = (inning === 1 && batOrBowl === "bat") || (inning === 2 && batOrBowl === "bowl");
-  const battingLabel = isPlayer1Batting ? `${player1Name} is Batting` : `${player2Name} is Batting`;
+  const isPlayer1Batting =
+    (inning === 1 && batOrBowl === "bat") ||
+    (inning === 2 && batOrBowl === "bowl");
+
+  const battingLabel = isPlayer1Batting
+    ? `${player1Name} is Batting`
+    : `${player2Name} is Batting`;
 
   const oversBowled = () => {
     const ballsBowled = overs * 6 - balls;
@@ -44,75 +79,133 @@ export default function MultiplayerGameScreen({ onAction, gameSettings, onGameCo
   const currentBatterName = isPlayer1Batting ? player1Name : player2Name;
   const currentBowlerName = isPlayer1Batting ? player2Name : player1Name;
 
+  // MAIN PICK HANDLER
   const handlePick = (num) => {
     if (inningOver || balls <= 0 || flyingBall || buttonsDisabled) return;
     setButtonsDisabled(true);
 
-    // Batter pick
+    // Batter pick phase
     if (pickPhase === "batter") {
       if (isPlayer1Batting) {
-        setPlayer1Hand(null); setPlayer2Hand(null); setPlayer1Msg(""); setPlayer2Msg("");
-        setTimeout(() => { setPlayer1Hand(num); setPlayer1Msg(`${currentBatterName} chose ${num}`); }, 120);
+        setPlayer1Hand(num);
+        setPlayer1Msg(`${currentBatterName} chose ${num}`);
       } else {
-        setPlayer2Hand(null); setPlayer1Hand(null); setPlayer1Msg(""); setPlayer2Msg("");
-        setTimeout(() => { setPlayer2Hand(num); setPlayer2Msg(`${currentBatterName} chose ${num}`); }, 120);
+        setPlayer2Hand(num);
+        setPlayer2Msg(`${currentBatterName} chose ${num}`);
       }
-      setPickPhase("bowler"); setButtonsDisabled(false); return;
+      setPickPhase("bowler");
+      setButtonsDisabled(false);
+      return;
     }
 
-    // Bowler pick
+    // Bowler pick phase
     let batterPick = isPlayer1Batting ? player1Hand : player2Hand;
-    if (!batterPick) batterPick = num;
 
     if (isPlayer1Batting) {
-      setPlayer2Hand(num); setPlayer2Msg(`${currentBowlerName} chose ${num}`);
+      setPlayer2Hand(num);
+      setPlayer2Msg(`${currentBowlerName} chose ${num}`);
     } else {
-      setPlayer1Hand(num); setPlayer1Msg(`${currentBowlerName} chose ${num}`);
+      setPlayer1Hand(num);
+      setPlayer1Msg(`${currentBowlerName} chose ${num}`);
     }
+
     setFlyingBall(num);
 
     setTimeout(() => {
-      if (Number(num) === Number(batterPick)) {
-        setCenterResult("OUT!"); setWickets((w) => w + 1);
+      if (num === batterPick) {
+        setCenterResult("OUT!");
+        setWickets((w) => w + 1);
       } else {
-        const runs = Number(batterPick);
-        setCenterResult(`${runs} Runs!`); setScoredRun(runs);
+        const runs = batterPick;
+        setCenterResult(`${runs} Runs!`);
+        setScoredRun(runs);
+
         setTimeout(() => {
-          if (isPlayer1Batting) setPlayer1Score((s) => s + runs);
-          else setPlayer2Score((s) => s + runs);
+          if (isPlayer1Batting)
+            setPlayer1Score((s) => s + runs);
+          else
+            setPlayer2Score((s) => s + runs);
           setScoredRun(null);
         }, 800);
       }
 
-      setBalls((b) => b - 1); setFlyingBall(null);
-      setTimeout(() => { setCenterResult(""); setReadyText(true); setPickPhase("batter");
-        setTimeout(() => { setReadyText(false); setButtonsDisabled(false); }, 1000);
+      setBalls((b) => b - 1);
+      setFlyingBall(null);
+
+      setTimeout(() => {
+        setCenterResult("");
+        setReadyText(true);
+        setPickPhase("batter");
+
+        setTimeout(() => {
+          setReadyText(false);
+          setButtonsDisabled(false);
+        }, 1000);
       }, 1000);
     }, 900);
   };
 
+  // CHECK INNINGS END
   useEffect(() => {
     if (balls === 0 || wickets >= wicketsLimit) {
       if (inning === 1) {
-        const firstInningScore = isPlayer1Batting ? player1Score : player2Score;
-        setTarget(firstInningScore + 1); setInningOver(true);
-      } else setInningOver(true);
+        const firstScore = isPlayer1Batting ? player1Score : player2Score;
+        setTarget(firstScore + 1);
+        setInningOver(true);
+      } else {
+        setInningOver(true);
+      }
     }
+
     if (inning === 2 && target !== null) {
-      if ((isPlayer1Batting && player1Score >= target) || (!isPlayer1Batting && player2Score >= target)) setInningOver(true);
+      if (
+        (isPlayer1Batting && player1Score >= target) ||
+        (!isPlayer1Batting && player2Score >= target)
+      ) {
+        setInningOver(true);
+      }
     }
-  }, [balls, wickets, player1Score, player2Score, inning, target, isPlayer1Batting]);
+  }, [
+    balls,
+    wickets,
+    player1Score,
+    player2Score,
+    inning,
+    target,
+    isPlayer1Batting,
+  ]);
 
   const startSecondInnings = () => {
-    setInning(2); setBalls(overs * 6); setWickets(0); setInningOver(false);
-    setPlayer1Hand(null); setPlayer2Hand(null); setCenterResult(""); setPlayer1Msg(""); setPlayer2Msg("");
+    setInning(2);
+    setBalls(overs * 6);
+    setWickets(0);
+    setInningOver(false);
+    setPlayer1Hand(null);
+    setPlayer2Hand(null);
+    setCenterResult("");
+    setPlayer1Msg("");
+    setPlayer2Msg("");
     setPickPhase("batter");
   };
 
   const restartGame = () => {
-    setInning(1); setPlayer1Score(0); setPlayer2Score(0); setWickets(0); setBalls(overs * 6); setTarget(null);
-    setPlayer1Hand(null); setPlayer2Hand(null); setPlayer1Msg(""); setPlayer2Msg(""); setCenterResult(""); setScoredRun(null);
-    setInningOver(false); setFlyingBall(null); setReadyText(false); setButtonsDisabled(false); setShowSettings(false);
+    setInning(1);
+    setPlayer1Score(0);
+    setPlayer2Score(0);
+    setWickets(0);
+    setBalls(overs * 6);
+    setTarget(null);
+    setPlayer1Hand(null);
+    setPlayer2Hand(null);
+    setPlayer1Msg("");
+    setPlayer2Msg("");
+    setCenterResult("");
+    setScoredRun(null);
+    setInningOver(false);
+    setFlyingBall(null);
+    setReadyText(false);
+    setButtonsDisabled(false);
+    setShowSettings(false);
     setPickPhase("batter");
   };
 
@@ -122,129 +215,196 @@ export default function MultiplayerGameScreen({ onAction, gameSettings, onGameCo
     <div
       className="game-screen"
       style={{
-        backgroundImage: "url('/src/assets/images/gameplay.png')",
+        backgroundImage: `url(${gameplayBg})`, // ✅ FIXED
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      {/* Rules Modal */}
+      {/* RULES MODAL */}
       <AnimatePresence>
         {showRules && (
-          <motion.div className="modal-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <motion.div className="modal" initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.6, opacity: 0 }}>
+          <motion.div className="modal-overlay">
+            <motion.div className="modal">
               <h2>📜 Multiplayer Rules</h2>
-              <p>Local multiplayer: both players use same device. Batter selects first (1–6), then bowler selects (1–6).</p>
-              <p>Innings switch after overs completed or wickets are lost.</p>
+              <p>Batter picks first (1–6), Bowler picks next.</p>
+              <p>Same number = OUT!</p>
               <button onClick={() => setShowRules(false)}>Start Match</button>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Settings Modal */}
-      <AnimatePresence>
-        {showSettings && (
-          <motion.div className="modal-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <motion.div className="modal settings-modal" initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.6, opacity: 0 }}>
-              <h2>⚙️ Settings</h2>
-              <p>Overs: {overs} — Wickets: {wicketsLimit}</p>
-              <p>Batting first: {batOrBowl === "bat" ? player1Name : player2Name}</p>
-              <button className="restart-btn" onClick={restartGame}>🔄 Restart Game</button>
-              <button onClick={() => setShowSettings(false)}>Close</button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Scoreboard */}
+      {/* SCOREBOARD */}
       <div className="game-scoreboard">
         <div className="gs-row">
           <span>Inning: {inning}</span>
           <div className="batting-info">{battingLabel}</div>
-          <button className="settings-btn" onClick={() => setShowSettings(true)}>⚙️</button>
+          <button className="settings-btn" onClick={() => setShowSettings(true)}>
+            ⚙️
+          </button>
         </div>
+
         <div className="gs-big">
           <div className="gs-player">
-            <div className="gs-subtitle">{isPlayer1Batting ? player1Name : player2Name}</div>
+            <div className="gs-subtitle">
+              {isPlayer1Batting ? player1Name : player2Name}
+            </div>
             <div className="gs-score">{battingScore}</div>
           </div>
+
           <div className="gs-vertical-divider"></div>
+
           <div className="gs-player">
             <div className="gs-subtitle">Wickets</div>
-            <div className="gs-score">{wickets}/{wicketsLimit}</div>
+            <div className="gs-score">
+              {wickets}/{wicketsLimit}
+            </div>
           </div>
         </div>
+
         <div className="smalls">
           <span>Overs: {oversBowled()}</span>
           <span>Balls Left: {balls}</span>
         </div>
+
         {inning === 2 && <div className="target">Target: {target}</div>}
       </div>
 
-      {/* Play Area */}
+      {/* PLAY AREA */}
       <div className="play-area">
-        {/* Player 1 Side */}
+        {/* PLAYER 1 */}
         <div className={`side player-side ${isPlayer1Batting ? "active" : ""}`}>
           <AnimatePresence>
             {player1Hand && (
-              <motion.div initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -100, opacity: 0 }} transition={{ duration: 0.4 }}>
-                <img src={`/src/assets/images/handfinger${player1Hand}.png`} alt={`P1 hand ${player1Hand}`} className="hand-img"/>
-                <motion.div className="hand-msg player-msg glow-text-enhanced" initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>{player1Msg || player1Name}</motion.div>
-                <div className="hand-badge">{player1Name}</div>
+              <motion.div>
+                <img
+                  src={handImages[player1Hand]} // ✅ FIXED
+                  alt="P1 hand"
+                  className="hand-img"
+                />
+                <div className="hand-msg player-msg">{player1Msg}</div>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        {/* Center Stage */}
+        {/* CENTER STAGE */}
         <div className="center-stage">
-          <div className="turn-indicator" style={{ marginBottom: 10 }}>
-            {pickPhase === "batter" ? `Batter: ${currentBatterName} — Pick a number` : `Bowler: ${currentBowlerName} — Pick a number`}
+          <div className="turn-indicator">
+            {pickPhase === "batter"
+              ? `Batter: ${currentBatterName} — Pick`
+              : `Bowler: ${currentBowlerName} — Pick`}
           </div>
+
           <div className="ball-row">
-            {[1,2,3,4,5,6].map((n) => (
+            {[1, 2, 3, 4, 5, 6].map((n) => (
               <div className="ball-slot" key={n}>
-                <motion.button className="number-ball-btn" onClick={() => handlePick(n)} disabled={buttonsDisabled} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <motion.img src="/src/assets/images/ball1.png" alt="ball" className="ball-img-enhanced"
-                    animate={flyingBall === n ? { y: -300, scale: 1.8, rotate: 1080, opacity: 0 } : { y: 0, scale: 1, rotate: 0, opacity: 1 }} transition={{ duration: 1.2, ease: "easeInOut" }}/>
+                <motion.button
+                  className="number-ball-btn"
+                  onClick={() => handlePick(n)}
+                  disabled={buttonsDisabled}
+                >
+                  <motion.img
+                    src={ball1} // ✅ FIXED
+                    alt="ball"
+                    className="ball-img-enhanced"
+                    animate={
+                      flyingBall === n
+                        ? {
+                            y: -300,
+                            scale: 1.8,
+                            rotate: 1080,
+                            opacity: 0,
+                          }
+                        : {
+                            y: 0,
+                            scale: 1,
+                            rotate: 0,
+                            opacity: 1,
+                          }
+                    }
+                  />
                   <span className="ball-number-label">{n}</span>
                 </motion.button>
               </div>
             ))}
           </div>
 
+          {/* RESULT */}
           <div className="center-result-wrap">
             <AnimatePresence>
-              {centerResult && <motion.div key={centerResult+balls} className={`center-result ${centerResult.includes("OUT") ? "out" : "runs"}`} initial={{ scale: 0.3, opacity: 0, rotateY: -90 }} animate={{ scale: 1.1, opacity: 1, rotateY: 0 }} exit={{ scale: 0.3, opacity: 0, rotateY: 90 }}>{centerResult}</motion.div>}
-              {scoredRun && <motion.div key={scoredRun} className="fly-run" initial={{ y:0, opacity:1, scale:1 }} animate={{ y:-280, opacity:0, rotate:720, scale:1.5 }} transition={{ duration: 1.2 }}>+{scoredRun}</motion.div>}
-              {readyText && <motion.div className="ready-text-enhanced" initial={{ scale:0.6, opacity:0 }} animate={{ scale:1, opacity:1 }} exit={{ scale:0.6, opacity:0 }}>⚡ Get Ready for Next Ball ⚡</motion.div>}
+              {centerResult && (
+                <motion.div className="center-result">
+                  {centerResult}
+                </motion.div>
+              )}
+
+              {scoredRun && (
+                <motion.div className="fly-run">+{scoredRun}</motion.div>
+              )}
+
+              {readyText && (
+                <motion.div className="ready-text-enhanced">
+                  ⚡ Get Ready ⚡
+                </motion.div>
+              )}
             </AnimatePresence>
           </div>
         </div>
 
-        {/* Player 2 Side */}
+        {/* PLAYER 2 */}
         <div className={`side computer-side ${!isPlayer1Batting ? "active" : ""}`}>
           <AnimatePresence>
             {player2Hand && (
-              <motion.div initial={{ x: 100, opacity: 0 }} animate={{ x:0, opacity:1 }} exit={{ x:100, opacity:0 }} transition={{ duration: 0.4 }}>
-                <img src={`/src/assets/images/handfinger${player2Hand}.png`} alt={`P2 hand ${player2Hand}`} className="hand-img"/>
-                <motion.div className="hand-msg computer-msg glow-text-enhanced" initial={{ scale:0.6, opacity:0 }} animate={{ scale:1, opacity:1 }}>{player2Msg || player2Name}</motion.div>
-                <div className="hand-badge">{player2Name}</div>
+              <motion.div>
+                <img
+                  src={handImages[player2Hand]} // ✅ FIXED
+                  alt="P2 hand"
+                  className="hand-img"
+                />
+                <div className="hand-msg computer-msg">{player2Msg}</div>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
       </div>
 
-      {/* Innings Over / End Game */}
+      {/* INNINGS OVER */}
       <AnimatePresence>
         {inningOver && (
-          <motion.div className="modal-overlay" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
-            <motion.div className="modal innings-modal" initial={{scale:0.6, opacity:0, y:50}} animate={{scale:1, opacity:1, y:0}} exit={{scale:0.6, opacity:0, y:50}}>
+          <motion.div className="modal-overlay">
+            <motion.div className="modal innings-modal">
               <h2>🏏 INNINGS OVER</h2>
-              <div className="innings-score">Score: {battingScore}/{wickets}</div>
-              {inning === 1 && <><div className="innings-target">Target: {target} runs in {overs} overs</div><button onClick={startSecondInnings}>Start Second Innings</button></>}
-              {inning === 2 && <button onClick={() => onGameComplete({ resultType: player1Score>player2Score?"victory":player1Score<player2Score?"lose":"draw", playerScore:player1Score, computerScore:player2Score, winMargin: Math.abs(player1Score-player2Score) })}>Show Result</button>}
+              <div className="innings-score">
+                Score: {battingScore}/{wickets}
+              </div>
+
+              {inning === 1 ? (
+                <>
+                  <div className="innings-target">
+                    Target: {target} in {overs} overs
+                  </div>
+                  <button onClick={startSecondInnings}>Start 2nd Innings</button>
+                </>
+              ) : (
+                <button
+                  onClick={() =>
+                    onGameComplete({
+                      resultType:
+                        player1Score > player2Score
+                          ? "victory"
+                          : player1Score < player2Score
+                          ? "lose"
+                          : "draw",
+                      playerScore: player1Score,
+                      computerScore: player2Score,
+                      winMargin: Math.abs(player1Score - player2Score),
+                    })
+                  }
+                >
+                  Show Result
+                </button>
+              )}
             </motion.div>
           </motion.div>
         )}
@@ -252,6 +412,3 @@ export default function MultiplayerGameScreen({ onAction, gameSettings, onGameCo
     </div>
   );
 }
-
-
-

@@ -2,6 +2,12 @@
 import React, { useState, useEffect } from "react";
 import "./MultiplayerScreen.css";
 
+// ✅ FIXED IMAGE IMPORTS
+import bg from "../assets/images/background2.png";
+import stadiumLeft from "../assets/images/stadiumlight.png";
+import stadiumRight from "../assets/images/stadiumlight1.png";
+import stumps from "../assets/images/stumps1.png";
+
 export default function MultiplayerScreen({ API_BASE, onAction }) {
   const [showRoomPanel, setShowRoomPanel] = useState(false);
   const [inRoom, setInRoom] = useState(false);
@@ -107,7 +113,6 @@ export default function MultiplayerScreen({ API_BASE, onAction }) {
 
         alert("Room created: " + data.roomCode);
 
-        // Go to toss screen
         onAction("multiplayerToss");
       } else {
         alert("Failed to create room");
@@ -142,7 +147,6 @@ export default function MultiplayerScreen({ API_BASE, onAction }) {
 
         alert("Joined room: " + roomCode);
 
-        // Go to toss screen
         onAction("multiplayerToss");
       } else {
         alert("Failed to join room");
@@ -168,10 +172,12 @@ export default function MultiplayerScreen({ API_BASE, onAction }) {
 
   return (
     <div className="multiplayer-container">
-      <img src="/src/assets/images/background2.png" className="background" />
-      <img src="/src/assets/images/stadiumlight.png" className="stadium-lights-left" />
-      <img src="/src/assets/images/stadiumlight1.png" className="stadium-lights-right" />
-      <img src="/src/assets/images/stumps1.png" className="stumps" />
+
+      {/* ✅ FIXED IMAGES */}
+      <img src={bg} className="background" alt="bg" />
+      <img src={stadiumLeft} className="stadium-lights-left" alt="light left" />
+      <img src={stadiumRight} className="stadium-lights-right" alt="light right" />
+      <img src={stumps} className="stumps" alt="stumps" />
 
       {/* LOGIN BUTTON */}
       <button
@@ -248,9 +254,7 @@ export default function MultiplayerScreen({ API_BASE, onAction }) {
             <div className="profile guest">👤 {isHost ? "Waiting..." : "You"}</div>
           </div>
 
-          <p className="waiting">
-            Waiting to start toss...
-          </p>
+          <p className="waiting">Waiting to start toss...</p>
 
           <button className="btn close" onClick={leaveRoom}>✖ Leave Room</button>
         </div>

@@ -17,7 +17,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/src/assets/images/gameplay.png');
+  background-image: url('/assets/images/gameplay.png'); /* ✅ FIXED */
   background-size: cover;
   background-position: center;
   z-index: -2;
@@ -222,23 +222,22 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-.home-btn:hover { 
-  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4); 
+.home-btn:hover {
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
 }
 
-.play-again-btn:hover { 
-  box-shadow: 0 8px 25px rgba(33, 150, 243, 0.4); 
+.play-again-btn:hover {
+  box-shadow: 0 8px 25px rgba(33, 150, 243, 0.4);
 }
 
-.leaderboard-btn:hover { 
-  box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4); 
+.leaderboard-btn:hover {
+  box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4);
 }
 
-.settings-btn:hover { 
-  box-shadow: 0 8px 25px rgba(158, 158, 158, 0.4); 
+.settings-btn:hover {
+  box-shadow: 0 8px 25px rgba(158, 158, 158, 0.4);
 }
 
-/* Animations */
 @keyframes confetti-fall {
   0% {
     transform: translateY(-100vh) rotate(0deg);
@@ -299,7 +298,7 @@
 }
 
 @keyframes lose-shake {
-  0%, 100% { transform: translateX(0); }
+  0%, 100% { transform: translateX(0); } 
   25% { transform: translateX(-3px); }
   75% { transform: translateX(3px); }
 }
@@ -319,7 +318,6 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .result-content {
     padding: 1rem;
@@ -353,44 +351,44 @@
     width: 200px;
     justify-content: center;
   }
- /* Settings panel */
-.settings-panel {
-  margin-top: 20px;
-  animation: fadeIn 0.5s ease-in-out;
-}
 
-.settings-card {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 20px;
-  border-radius: 12px;
-  width: 80%;
-  margin: 0 auto;
-  text-align: center;
-  color: #fff;
-}
+  .settings-panel {
+    margin-top: 20px;
+    animation: fadeIn 0.5s ease-in-out;
+  }
 
-.settings-item {
-  margin: 15px 0;
-}
+  .settings-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    color: #fff;
+  }
 
-.settings-item label {
-  margin-right: 10px;
-}
+  .settings-item {
+    margin: 15px 0;
+  }
 
-.settings-item select,
-.settings-item input[type="checkbox"] {
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: none;
-}
+  .settings-item label {
+    margin-right: 10px;
+  }
 
-.close-settings-btn {
-  margin-top: 15px;
-  padding: 8px 16px;
-  background: #ff6b6b;
-  border: none;
-  border-radius: 8px;
-  color: #fff;
-  cursor: pointer;
-} 
+  .settings-item select,
+  .settings-item input[type="checkbox"] {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: none;
+  }
+
+  .close-settings-btn {
+    margin-top: 15px;
+    padding: 8px 16px;
+    background: #ff6b6b;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+  }
 }

@@ -1,6 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./GameScreen.css";
+import gameplayBg from "../assets/images/gameplay.png";
+import ball1 from "../assets/images/ball1.png";
+import hand1 from "../assets/images/handfinger1.png";
+import hand2 from "../assets/images/handfinger2.png";
+import hand3 from "../assets/images/handfinger3.png";
+import hand4 from "../assets/images/handfinger4.png";
+import hand5 from "../assets/images/handfinger5.png";
+import hand6 from "../assets/images/handfinger6.png";
+
+const handImages = {
+  1: hand1,
+  2: hand2,
+  3: hand3,
+  4: hand4,
+  5: hand5,
+  6: hand6
+};
 
 const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
   const { overs = 1, wicketsLimit = 1, batOrBowl = "bat" } = {
@@ -32,17 +49,14 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
   const [readyText, setReadyText] = useState(false);
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
-  // Determine if player is batting
   const isPlayerBatting =
     (inning === 1 && batOrBowl === "bat") ||
     (inning === 2 && batOrBowl === "bowl");
 
-  // ✅ Proper batting label
   const currentBattingLabel = isPlayerBatting
     ? "🏏 You're Batting"
     : "⚾ Computer is Batting";
 
-  // Overs calculation like 0.1/1
   const oversBowled = () => {
     const ballsBowled = overs * 6 - balls;
     const ov = Math.floor(ballsBowled / 6);
@@ -59,13 +73,11 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
     setTimeout(() => {
       const comp = Math.floor(Math.random() * 6) + 1;
 
-      // Clear previous hand animations first
       setPlayerHand(null);
       setComputerHand(null);
       setPlayerMsg("");
       setComputerMsg("");
 
-      // Show chosen hands after a brief delay
       setTimeout(() => {
         setPlayerHand(num);
         setComputerHand(comp);
@@ -73,7 +85,6 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
         setComputerMsg(`Computer chose ${comp}`);
       }, 200);
 
-      // Batting side decides runs
       const batsmanRun = isPlayerBatting ? num : comp;
 
       if (num === comp) {
@@ -96,7 +107,6 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
       setBalls((b) => b - 1);
       setFlyingBall(null);
 
-      // Clear result after delay → show ready banner
       setTimeout(() => {
         setCenterResult("");
         setReadyText(true);
@@ -108,7 +118,6 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
     }, 1200);
   };
 
-  // ✅ FIX innings end check
   useEffect(() => {
     if (balls === 0 || wickets >= wicketsLimit) {
       if (inning === 1) {
@@ -121,7 +130,6 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
       }
     }
 
-    // Stop game if target achieved
     if (inning === 2 && target !== null) {
       if (!isPlayerBatting && computerScore >= target) {
         setInningOver(true);
@@ -167,9 +175,8 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
   return (
     <div
       className="game-screen"
-      style={{ backgroundImage: "url('/src/assets/images/gameplay.png')" }}
+      style={{ backgroundImage: `url(${gameplayBg})` }}
     >
-      {/* Rules Modal */}
       <AnimatePresence>
         {showRules && (
           <motion.div
@@ -193,7 +200,6 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
         )}
       </AnimatePresence>
 
-      {/* Settings Modal */}
       <AnimatePresence>
         {showSettings && (
           <motion.div
@@ -244,7 +250,6 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
         )}
       </AnimatePresence>
 
-      {/* Scoreboard */}
       <div className="game-scoreboard">
         <div className="gs-row">
           <span>Inning: {inning}</span>
@@ -275,9 +280,7 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
         {inning === 2 && <div className="target">Target: {target}</div>}
       </div>
 
-      {/* Play Area */}
       <div className="play-area">
-        {/* Player Side */}
         <div className="side player-side">
           <AnimatePresence>
             {playerHand && (
@@ -288,7 +291,7 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
                 transition={{ duration: 0.5 }}
               >
                 <img
-                  src={`/src/assets/images/handfinger${playerHand}.png`}
+                  src={handImages[playerHand]}
                   alt={`Player hand ${playerHand}`}
                   className="hand-img"
                 />
@@ -305,9 +308,7 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
           </AnimatePresence>
         </div>
 
-        {/* Center Stage */}
         <div className="center-stage">
-          {/* Ball Row */}
           <div className="ball-row">
             {[1, 2, 3, 4, 5, 6].map((num) => (
               <div className="ball-slot" key={num}>
@@ -319,7 +320,7 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
                   whileTap={{ scale: 0.95 }}
                 >
                   <motion.img
-                    src="/src/assets/images/ball1.png"
+                    src={ball1}
                     alt="ball"
                     className="ball-img-enhanced"
                     animate={
@@ -345,7 +346,6 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
             ))}
           </div>
 
-          {/* Center Result */}
           <div className="center-result-wrap">
             <AnimatePresence>
               {centerResult && (
@@ -400,7 +400,6 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
           </div>
         </div>
 
-        {/* Computer Side */}
         <div className="side computer-side">
           <AnimatePresence>
             {computerHand && (
@@ -411,7 +410,7 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
                 transition={{ duration: 0.5 }}
               >
                 <img
-                  src={`/src/assets/images/handfinger${computerHand}.png`}
+                  src={handImages[computerHand]}
                   alt={`Computer hand ${computerHand}`}
                   className="hand-img"
                 />
@@ -429,7 +428,6 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
         </div>
       </div>
 
-      {/* Inning Over */}
       <AnimatePresence>
         {inningOver && (
           <motion.div

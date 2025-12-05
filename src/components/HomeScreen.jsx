@@ -1,12 +1,13 @@
 import React from "react";
 import "./HomeScreen.css";
+import girlImage from "../assets/images/mecrick.png";
 
 export default function HomeScreen({ onAction }) {
   return (
     <div className="home-container">
       <div className="glow-background"></div>
 
-      <img src="/src/assets/images/mecrick.png" alt="girl character" className="girl-left" />
+      <img src={girlImage} alt="girl character" className="girl-left" />
 
       <div className="buttons-home">
         <button onClick={() => onAction("toss")} className="btn-home glow-btn">
