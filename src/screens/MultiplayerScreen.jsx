@@ -19,7 +19,7 @@ export default function MultiplayerScreen({ API_BASE, onAction }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const base = API_BASE || "http://localhost:8000";
+  const base = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const savedRoom = localStorage.getItem("roomCode");

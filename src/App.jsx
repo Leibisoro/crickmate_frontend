@@ -16,7 +16,8 @@ function App() {
   const [gameResult, setGameResult] = useState(null);
 
   // ✅ Backend Link
-  const API_BASE = "http://localhost:8000";
+  const base = import.meta.env.VITE_API_URL;
+
 
   const handleGameComplete = (resultData) => {
     setGameResult(resultData);
