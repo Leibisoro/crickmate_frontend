@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./Leaderboard.css";
 
 export default function Leaderboard({ API_BASE, onBackToResult }) {
-  const base = API_BASE || "http://localhost:8000";
+  const base = API_BASE || "https://crickmatebackend-production.up.railway.app";
 
   const [leaders, setLeaders] = useState([]);
 
@@ -29,8 +29,9 @@ export default function Leaderboard({ API_BASE, onBackToResult }) {
 
   // WebSocket for live updates
   useEffect(() => {
-    const url = base.replace("http://", "");
-    const ws = new WebSocket(`ws://${url}/ws`);
+    const url = base.replace("https://", "").replace("http://", "");
+    const protocol = base.startsWith("https") ? "wss://" : "ws://";
+    const ws = new WebSocket(`${protocol}${url}/ws`);
 
     ws.onmessage = (event) => {
       try {
@@ -54,12 +55,12 @@ export default function Leaderboard({ API_BASE, onBackToResult }) {
       <table className="leaderboard-table">
         <thead>
           <tr>
-            <th>Rank</th>
-            <th>Player</th>
-            <th>Wins</th>
-            <th>Losses</th>
-            <th>Rating</th>
-            <th>Block Hash</th>
+            <th>RANK</th>
+            <th>PLAYER</th>
+            <th>WINS</th>
+            <th>LOSSES</th>
+            <th>RATING</th>
+            <th>BLOCK HASH</th>
           </tr>
         </thead>
 
@@ -77,7 +78,7 @@ export default function Leaderboard({ API_BASE, onBackToResult }) {
             ))
           ) : (
             <tr>
-              <td colSpan="6" style={{ textAlign: "center" }}>
+              <td colSpan="6" style={{ textAlign: "center", padding: "30px" }}>
                 No leaderboard data found.
               </td>
             </tr>
@@ -86,7 +87,7 @@ export default function Leaderboard({ API_BASE, onBackToResult }) {
       </table>
 
       <button className="back-btn" onClick={onBackToResult}>
-        ← Back
+        ← Back to Result
       </button>
     </div>
   );

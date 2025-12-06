@@ -1,5 +1,3 @@
-/* GameScreen.css — Complete Enhanced styles with all improvements */
-
 /* ---------- Base ---------- */
 :root{
   --accent: #ffcc33;
@@ -9,12 +7,292 @@
   --glass-2: rgba(0,0,0,0.35);
 }
 
+/* ---------- Realistic 3D Clouds ---------- */
+.cloud-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cloud {
+  position: absolute;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+}
+
+.cloud-part {
+  position: absolute;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(255, 255, 255, 0.95) 40%,
+    rgba(245, 250, 255, 0.85) 70%,
+    rgba(230, 240, 250, 0.5) 100%
+  );
+  border-radius: 50%;
+  box-shadow: 
+    inset 0 -15px 30px rgba(200, 220, 240, 0.3),
+    inset 0 10px 20px rgba(255, 255, 255, 0.4),
+    0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Cloud 1 - Fluffy cumulus */
+.cloud-1 {
+  top: 8%;
+  left: 10%;
+  width: 180px;
+  height: 80px;
+}
+
+.cloud-1 .cloud-part:nth-child(1) {
+  width: 100px;
+  height: 60px;
+  left: 0;
+  bottom: 0;
+}
+
+.cloud-1 .cloud-part:nth-child(2) {
+  width: 80px;
+  height: 80px;
+  left: 40px;
+  bottom: 10px;
+}
+
+.cloud-1 .cloud-part:nth-child(3) {
+  width: 90px;
+  height: 70px;
+  left: 80px;
+  bottom: 5px;
+}
+
+.cloud-1 .cloud-part:nth-child(4) {
+  width: 60px;
+  height: 50px;
+  left: 120px;
+  bottom: 0;
+}
+
+/* Cloud 2 - Large billowy - RIGHT SIDE */
+.cloud-2 {
+  top: 12%;
+  right: 8%;
+  width: 200px;
+  height: 90px;
+}
+
+.cloud-2 .cloud-part:nth-child(1) {
+  width: 110px;
+  height: 65px;
+  left: 0;
+  bottom: 0;
+}
+
+.cloud-2 .cloud-part:nth-child(2) {
+  width: 95px;
+  height: 95px;
+  left: 45px;
+  bottom: 15px;
+}
+
+.cloud-2 .cloud-part:nth-child(3) {
+  width: 100px;
+  height: 75px;
+  left: 95px;
+  bottom: 8px;
+}
+
+.cloud-2 .cloud-part:nth-child(4) {
+  width: 70px;
+  height: 55px;
+  left: 140px;
+  bottom: 0;
+}
+
+/* Cloud 3 - Small puffy - CENTER */
+.cloud-3 {
+  top: 6%;
+  left: 45%;
+  width: 140px;
+  height: 65px;
+}
+
+.cloud-3 .cloud-part:nth-child(1) {
+  width: 75px;
+  height: 50px;
+  left: 0;
+  bottom: 0;
+}
+
+.cloud-3 .cloud-part:nth-child(2) {
+  width: 70px;
+  height: 70px;
+  left: 35px;
+  bottom: 10px;
+}
+
+.cloud-3 .cloud-part:nth-child(3) {
+  width: 65px;
+  height: 55px;
+  left: 75px;
+  bottom: 0;
+}
+
+/* Cloud 4 - Medium scattered - LEFT */
+.cloud-4 {
+  top: 20%;
+  left: 15%;
+  width: 160px;
+  height: 70px;
+}
+
+.cloud-4 .cloud-part:nth-child(1) {
+  width: 85px;
+  height: 55px;
+  left: 0;
+  bottom: 0;
+}
+
+.cloud-4 .cloud-part:nth-child(2) {
+  width: 75px;
+  height: 75px;
+  left: 40px;
+  bottom: 12px;
+}
+
+.cloud-4 .cloud-part:nth-child(3) {
+  width: 80px;
+  height: 60px;
+  left: 80px;
+  bottom: 5px;
+}
+
+/* Cloud 5 - Wispy - RIGHT */
+.cloud-5 {
+  top: 24%;
+  right: 18%;
+  width: 130px;
+  height: 60px;
+}
+
+.cloud-5 .cloud-part:nth-child(1) {
+  width: 70px;
+  height: 45px;
+  left: 0;
+  bottom: 0;
+}
+
+.cloud-5 .cloud-part:nth-child(2) {
+  width: 65px;
+  height: 65px;
+  left: 32px;
+  bottom: 8px;
+}
+
+.cloud-5 .cloud-part:nth-child(3) {
+  width: 60px;
+  height: 50px;
+  left: 70px;
+  bottom: 0;
+}
+
+/* Cloud 6 - Top right corner */
+.cloud-6 {
+  top: 5%;
+  right: 25%;
+  width: 150px;
+  height: 70px;
+}
+
+.cloud-6 .cloud-part:nth-child(1) {
+  width: 80px;
+  height: 50px;
+  left: 0;
+  bottom: 0;
+}
+
+.cloud-6 .cloud-part:nth-child(2) {
+  width: 70px;
+  height: 70px;
+  left: 35px;
+  bottom: 10px;
+}
+
+.cloud-6 .cloud-part:nth-child(3) {
+  width: 75px;
+  height: 60px;
+  left: 75px;
+  bottom: 5px;
+}
+
+.cloud-6 .cloud-part:nth-child(4) {
+  width: 50px;
+  height: 45px;
+  left: 110px;
+  bottom: 0;
+}
+
+/* Cloud 7 - Center lower */
+.cloud-7 {
+  top: 28%;
+  left: 40%;
+  width: 120px;
+  height: 60px;
+}
+
+.cloud-7 .cloud-part:nth-child(1) {
+  width: 70px;
+  height: 48px;
+  left: 0;
+  bottom: 0;
+}
+
+.cloud-7 .cloud-part:nth-child(2) {
+  width: 68px;
+  height: 68px;
+  left: 30px;
+  bottom: 10px;
+}
+
+.cloud-7 .cloud-part:nth-child(3) {
+  width: 65px;
+  height: 52px;
+  left: 65px;
+  bottom: 0;
+}
+
+/* Subtle floating animation */
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.cloud-1 { animation: float-gentle 15s ease-in-out infinite; }
+.cloud-2 { animation: float-gentle 18s ease-in-out infinite 2s; }
+.cloud-3 { animation: float-gentle 20s ease-in-out infinite 4s; }
+.cloud-4 { animation: float-gentle 17s ease-in-out infinite 1s; }
+.cloud-5 { animation: float-gentle 19s ease-in-out infinite 3s; }
+.cloud-6 { animation: float-gentle 16s ease-in-out infinite 5s; }
+.cloud-7 { animation: float-gentle 21s ease-in-out infinite 2.5s; }
+
 * { box-sizing: border-box; }
 html,body,#root { height: 100%; margin: 0; padding: 0; }
 .game-screen {
   width: 100%;
   height: 100vh;
-  background-size: cover;
+  background: linear-gradient(to bottom, 
+    #87CEEB 0%,      /* Sky blue at top */
+    #B0D4E3 40%,     /* Lighter blue */
+    #90C695 60%,     /* Light green grass */
+    #5D8F5D 100%     /* Dark green grass at bottom */
+  );
   background-position: center;
   position: relative;
   font-family: "Poppins", "Segoe UI", Roboto, Arial, sans-serif;
@@ -250,24 +528,56 @@ html,body,#root { height: 100%; margin: 0; padding: 0; }
   cursor: not-allowed;
 }
 
-/* Enhanced ball image - increased size */
+/* Enhanced ball image - RED CRICKET BALL STYLE */
 .ball-img-enhanced {
-  width: 90px !important; /* Increased from 76px */
-  height: auto;
+  width: 90px !important;
+  height: 90px !important;
   display: block;
   border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #dc2626, #991b1b);
+  border: 4px solid #7f1d1d;
   box-shadow: 
     0 15px 35px rgba(0,0,0,0.6),
-    0 5px 15px rgba(255, 204, 51, 0.2);
+    inset 0 -5px 15px rgba(0,0,0,0.3),
+    inset 0 5px 15px rgba(255,255,255,0.1);
   transform-origin: center;
   transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Cricket ball stitching effect */
+.ball-img-enhanced::before {
+  content: '';
+  position: absolute;
+  width: 80%;
+  height: 2px;
+  background: #7f1d1d;
+  top: 30%;
+  left: 10%;
+  transform: rotate(-15deg);
+  box-shadow: 0 0 3px rgba(0,0,0,0.5);
+}
+
+.ball-img-enhanced::after {
+  content: '';
+  position: absolute;
+  width: 80%;
+  height: 2px;
+  background: #7f1d1d;
+  bottom: 30%;
+  left: 10%;
+  transform: rotate(15deg);
+  box-shadow: 0 0 3px rgba(0,0,0,0.5);
 }
 
 .number-ball-btn:hover .ball-img-enhanced {
   box-shadow: 
     0 20px 40px rgba(0,0,0,0.7),
-    0 5px 20px rgba(255, 204, 51, 0.4);
+    0 5px 20px rgba(220, 38, 38, 0.4),
+    inset 0 -5px 15px rgba(0,0,0,0.3),
+    inset 0 5px 15px rgba(255,255,255,0.2);
   filter: brightness(1.1);
+  transform: scale(1.05);
 }
 
 /* number overlay on ball */
@@ -277,10 +587,13 @@ html,body,#root { height: 100%; margin: 0; padding: 0; }
   left: 50%;
   transform: translate(-50%, -50%);
   color: #fff;
-  font-weight: 800;
-  font-size: 22px; /* Increased for bigger balls */
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+  font-weight: 900;
+  font-size: 28px;
+  text-shadow: 
+    2px 2px 8px rgba(0,0,0,0.9),
+    0 0 10px rgba(255,255,255,0.3);
   pointer-events: none;
+  z-index: 10;
 }
 
 /* Enhanced center result area */
@@ -319,9 +632,9 @@ html,body,#root { height: 100%; margin: 0; padding: 0; }
 /* Enhanced flying run */
 .fly-run {
   position: absolute;
-  font-size: 60px; /* bada visible */
+  font-size: 60px;
   font-weight: 900;
-  color: #ffffff; /* white */
+  color: #ffffff;
   text-shadow: 0 0 15px #fff, 0 0 30px #fff, 0 0 45px rgba(255,255,255,0.9);
   z-index: 999;
   animation: flyToScoreboard 3s linear forwards;
@@ -334,22 +647,23 @@ html,body,#root { height: 100%; margin: 0; padding: 0; }
   }
   80% {
     transform: translate(900px, -300px) scale(2) rotate(720deg);
-    opacity: 1; /* ⚡ abhi tak clearly visible */
+    opacity: 1;
   }
   100% {
     transform: translate(1300px, -450px) scale(1.2) rotate(1440deg);
-    opacity: 0; /* sirf last me fade out */
+    opacity: 0;
   }
 }
+
 /* Enhanced "Get ready" text */
 .ready-text-enhanced {
   position: absolute;
   bottom: -80px;
-  font-size: 32px !important; /* Much bigger */
-  font-weight: 900 !important; /* Much bolder */
+  font-size: 32px !important;
+  font-weight: 900 !important;
   color: var(--accent) !important;
   background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,0,0,0.6));
-  padding: 16px 32px !important; /* More padding */
+  padding: 16px 32px !important;
   border-radius: 20px;
   box-shadow: 
     0 15px 35px rgba(0,0,0,0.6),
@@ -360,9 +674,8 @@ html,body,#root { height: 100%; margin: 0; padding: 0; }
     0 0 15px var(--accent),
     2px 2px 10px rgba(0,0,0,0.8);
   animation: ready-pulse 1.5s ease-in-out infinite;
-
-white-space: nowrap;
-text-align: center;
+  white-space: nowrap;
+  text-align: center;
 }
 
 @keyframes ready-pulse {
@@ -515,11 +828,38 @@ text-align: center;
 /* ---------- Legacy styles for backward compatibility ---------- */
 .ball-img {
   width: 76px;
-  height: auto;
+  height: 76px;
   display: block;
   border-radius: 50%;
-  box-shadow: 0 10px 22px rgba(0,0,0,0.5);
+  background: radial-gradient(circle at 30% 30%, #dc2626, #991b1b);
+  border: 3px solid #7f1d1d;
+  box-shadow: 
+    0 10px 22px rgba(0,0,0,0.5),
+    inset 0 -3px 10px rgba(0,0,0,0.3);
   transform-origin: center;
+  position: relative;
+}
+
+.ball-img::before {
+  content: '';
+  position: absolute;
+  width: 80%;
+  height: 2px;
+  background: #7f1d1d;
+  top: 30%;
+  left: 10%;
+  transform: rotate(-15deg);
+}
+
+.ball-img::after {
+  content: '';
+  position: absolute;
+  width: 80%;
+  height: 2px;
+  background: #7f1d1d;
+  bottom: 30%;
+  left: 10%;
+  transform: rotate(15deg);
 }
 
 .ball-number {
@@ -532,6 +872,7 @@ text-align: center;
   font-size: 18px;
   text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
   pointer-events: none;
+  z-index: 10;
 }
 
 .ready-text {
@@ -589,10 +930,11 @@ text-align: center;
     width: 140px; 
   }
   .ball-img-enhanced { 
-    width: 75px !important; 
+    width: 75px !important;
+    height: 75px !important;
   }
   .ball-number-label {
-    font-size: 18px;
+    font-size: 22px;
   }
   .center-result { 
     font-size: 36px; 
@@ -635,9 +977,10 @@ text-align: center;
   }
   .ball-img-enhanced {
     width: 65px !important;
+    height: 65px !important;
   }
   .ball-number-label {
-    font-size: 16px;
+    font-size: 20px;
   }
   .game-scoreboard { 
     width: 95%; 
@@ -677,9 +1020,10 @@ text-align: center;
   }
   .ball-img-enhanced {
     width: 55px !important;
+    height: 55px !important;
   }
   .ball-number-label {
-    font-size: 14px;
+    font-size: 16px;
   }
   .ready-text-enhanced {
     font-size: 18px !important;
@@ -700,6 +1044,3 @@ text-align: center;
     margin: 15px 0;
   }
 }
-
-
-

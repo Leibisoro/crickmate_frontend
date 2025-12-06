@@ -145,10 +145,27 @@ export default function TossScreen({ onAction, setGameSettings }) {
             {playerWon ? "You Won the Toss 🎉" : "AI Won the Toss 🤖"}
           </h1>
 
-          <div className="result-box">
-            <p>You: {userNumber}</p>
-            <p>AI: {aiNumber}</p>
-            <p>Total: {userNumber + aiNumber}</p>
+          <div className="toss-result-display">
+            <div className="toss-player-section">
+              <div className="toss-emoji">👦</div>
+              <div className="toss-label">You</div>
+              <div className="toss-ball-display">{userNumber}</div>
+            </div>
+
+            <div className="toss-calculation">
+              <span className="calc-num">{userNumber}</span>
+              <span className="calc-op">+</span>
+              <span className="calc-num">{aiNumber}</span>
+              <span className="calc-op">=</span>
+              <span className="calc-num">{userNumber + aiNumber}</span>
+              <div className="calc-parity">({(userNumber + aiNumber) % 2 === 0 ? 'Even' : 'Odd'})</div>
+            </div>
+
+            <div className="toss-player-section">
+              <div className="toss-emoji">🤖</div>
+              <div className="toss-label">AI</div>
+              <div className="toss-ball-display">{aiNumber}</div>
+            </div>
           </div>
 
           <button className="toss-proceed-btn" onClick={() => setStep(4)}>

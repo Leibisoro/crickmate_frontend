@@ -1,22 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./GameScreen.css";
-import gameplayBg from "../assets/images/gameplay.png";
-import ball1 from "../assets/images/ball1.png";
-import hand1 from "../assets/images/handfinger1.png";
-import hand2 from "../assets/images/handfinger2.png";
-import hand3 from "../assets/images/handfinger3.png";
-import hand4 from "../assets/images/handfinger4.png";
-import hand5 from "../assets/images/handfinger5.png";
-import hand6 from "../assets/images/handfinger6.png";
 
 const handImages = {
-  1: hand1,
-  2: hand2,
-  3: hand3,
-  4: hand4,
-  5: hand5,
-  6: hand6
+  1: null,
+  2: null,
+  3: null,
+  4: null,
+  5: null,
+  6: null
 };
 
 const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
@@ -175,8 +167,59 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
   return (
     <div
       className="game-screen"
-      style={{ backgroundImage: `url(${gameplayBg})` }}
+      style={{
+        background: 'linear-gradient(to bottom, #87CEEB 0%, #B0D4E3 40%, #90C695 60%, #5D8F5D 100%)',
+        position: 'relative'
+      }}
     >
+      {/* Realistic 3D Clouds */}
+      <div className="cloud-container">
+        <div className="cloud cloud-1">
+          <div className="cloud-part"></div>
+          <div className="cloud-part"></div>
+          <div className="cloud-part"></div>
+          <div className="cloud-part"></div>
+        </div>
+        
+        <div className="cloud cloud-2">
+          <div className="cloud-part"></div>
+          <div className="cloud-part"></div>
+          <div className="cloud-part"></div>
+          <div className="cloud-part"></div>
+        </div>
+        
+        <div className="cloud cloud-3">
+          <div className="cloud-part"></div>
+          <div className="cloud-part"></div>
+          <div className="cloud-part"></div>
+        </div>
+        
+        <div className="cloud cloud-4">
+          <div className="cloud-part"></div>
+          <div className="cloud-part"></div>
+          <div className="cloud-part"></div>
+        </div>
+        
+        <div className="cloud cloud-5">
+          <div className="cloud-part"></div>
+          <div className="cloud-part"></div>
+          <div className="cloud-part"></div>
+        </div>
+        
+        <div className="cloud cloud-6">
+          <div className="cloud-part"></div>
+          <div className="cloud-part"></div>
+          <div className="cloud-part"></div>
+          <div className="cloud-part"></div>
+        </div>
+        
+        <div className="cloud cloud-7">
+          <div className="cloud-part"></div>
+          <div className="cloud-part"></div>
+          <div className="cloud-part"></div>
+        </div>
+      </div>
+
       <AnimatePresence>
         {showRules && (
           <motion.div
@@ -289,12 +332,30 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: -100, opacity: 0 }}
                 transition={{ duration: 0.5 }}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '15px'
+                }}
               >
-                <img
-                  src={handImages[playerHand]}
-                  alt={`Player hand ${playerHand}`}
-                  className="hand-img"
-                />
+                <div style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '50%',
+                  background: 'radial-gradient(circle at 30% 30%, #3b5998, #2c4373)',
+                  border: '4px solid #1e2f4f',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '48px',
+                  fontWeight: 'bold',
+                  color: '#ecf0f1',
+                  boxShadow: '0 15px 35px rgba(0,0,0,0.6), inset 0 -5px 15px rgba(0,0,0,0.3), inset 0 5px 15px rgba(255,255,255,0.1)',
+                  textShadow: '2px 2px 8px rgba(0,0,0,0.9), 0 0 10px rgba(255,255,255,0.3)'
+                }}>
+                  {playerHand}
+                </div>
                 <motion.div
                   className="hand-msg player-msg glow-text-enhanced"
                   initial={{ scale: 0.5, opacity: 0 }}
@@ -318,29 +379,26 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
                   disabled={buttonsDisabled}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
+                  style={{
+                    width: '90px',
+                    height: '90px',
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle at 30% 30%, #dc2626, #991b1b)',
+                    border: '4px solid #7f1d1d',
+                    color: '#fff',
+                    fontSize: '32px',
+                    fontWeight: 'bold',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 15px 35px rgba(0,0,0,0.6), inset 0 -5px 15px rgba(0,0,0,0.3), inset 0 5px 15px rgba(255,255,255,0.1)',
+                    transition: 'all 0.3s ease',
+                    textShadow: '2px 2px 8px rgba(0,0,0,0.9), 0 0 10px rgba(255,255,255,0.3)',
+                    position: 'relative'
+                  }}
                 >
-                  <motion.img
-                    src={ball1}
-                    alt="ball"
-                    className="ball-img-enhanced"
-                    animate={
-                      flyingBall === num
-                        ? {
-                            y: -300,
-                            scale: 1.8,
-                            rotate: 1080,
-                            opacity: 0,
-                          }
-                        : {
-                            y: 0,
-                            scale: 1,
-                            rotate: 0,
-                            opacity: 1,
-                          }
-                    }
-                    transition={{ duration: 1.2, ease: "easeInOut" }}
-                  />
-                  <span className="ball-number-label">{num}</span>
+                  {num}
                 </motion.button>
               </div>
             ))}
@@ -408,12 +466,30 @@ const GameScreen = ({ onAction, gameSettings, onGameComplete }) => {
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: 100, opacity: 0 }}
                 transition={{ duration: 0.5 }}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '15px'
+                }}
               >
-                <img
-                  src={handImages[computerHand]}
-                  alt={`Computer hand ${computerHand}`}
-                  className="hand-img"
-                />
+                <div style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '50%',
+                  background: 'radial-gradient(circle at 30% 30%, #3b5998, #2c4373)',
+                  border: '4px solid #1e2f4f',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '48px',
+                  fontWeight: 'bold',
+                  color: '#ecf0f1',
+                  boxShadow: '0 15px 35px rgba(0,0,0,0.6), inset 0 -5px 15px rgba(0,0,0,0.3), inset 0 5px 15px rgba(255,255,255,0.1)',
+                  textShadow: '2px 2px 8px rgba(0,0,0,0.9), 0 0 10px rgba(255,255,255,0.3)'
+                }}>
+                  {computerHand}
+                </div>
                 <motion.div
                   className="hand-msg computer-msg glow-text-enhanced"
                   initial={{ scale: 0.5, opacity: 0 }}

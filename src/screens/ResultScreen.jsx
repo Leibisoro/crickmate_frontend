@@ -31,34 +31,31 @@ const ResultScreen = ({
   const getResultText = () => {
     if (resultType === 'victory') {
       return winMargin?.value > 0
-        ? `🎉 You Won by ${winMargin.value} ${winMargin.type}`
-        : '🎉 You Won';
+        ? `You Won by ${winMargin.value} ${winMargin.type}`
+        : 'You Won';
     }
     if (resultType === 'lose') {
       return winMargin?.value > 0
-        ? `😢 You Lost by ${winMargin.value} ${winMargin.type}`
-        : '😢 You Lost';
+        ? `You Lost by ${winMargin.value} ${winMargin.type}`
+        : 'You Lost';
     }
     if (resultType === 'draw') {
-      return '🤝 Match Drawn';
+      return 'Match Drawn';
     }
     return '';
   };
 
-  const getCenterpieceImage = () => {
+  const getCenterpieceEmoji = () => {
     switch (resultType) {
-      case 'victory': return '/assets/images/trophy.png';
-      case 'lose': return '/assets/images/sad.png';
-      case 'draw': return '/assets/images/scale.png';
-      default: return '/assets/images/trophy.png';
+      case 'victory': return '🏆';
+      case 'lose': return '😢';
+      case 'draw': return '⚖️';
+      default: return '🏆';
     }
   };
 
   return (
     <div className="result-screen">
-
-      <div className="result-background" />
-
       {resultType === 'victory' && (
         <div className="confetti-container">
           {Array.from({ length: 50 }).map((_, i) => (
@@ -83,11 +80,9 @@ const ResultScreen = ({
       <div className="result-content">
 
         <div className={`centerpiece centerpiece-${resultType}`}>
-          <img 
-            src={getCenterpieceImage()} 
-            alt={resultType}
-            className="centerpiece-image big-trophy"
-          />
+          <div className="centerpiece-image big-trophy">
+            {getCenterpieceEmoji()}
+          </div>
         </div>
 
         <div className={`result-text result-text-${resultType}`}>
