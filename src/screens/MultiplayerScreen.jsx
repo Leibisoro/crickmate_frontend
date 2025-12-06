@@ -2,12 +2,6 @@
 import React, { useState, useEffect } from "react";
 import "./MultiplayerScreen.css";
 
-// ✅ FIXED IMAGE IMPORTS
-import bg from "../assets/images/background2.png";
-import stadiumLeft from "../assets/images/stadiumlight.png";
-import stadiumRight from "../assets/images/stadiumlight1.png";
-import stumps from "../assets/images/stumps1.png";
-
 export default function MultiplayerScreen({ API_BASE, onAction }) {
   const [showRoomPanel, setShowRoomPanel] = useState(false);
   const [inRoom, setInRoom] = useState(false);
@@ -172,12 +166,20 @@ export default function MultiplayerScreen({ API_BASE, onAction }) {
 
   return (
     <div className="multiplayer-container">
-
-      {/* ✅ FIXED IMAGES */}
-      <img src={bg} className="background" alt="bg" />
-      <img src={stadiumLeft} className="stadium-lights-left" alt="light left" />
-      <img src={stadiumRight} className="stadium-lights-right" alt="light right" />
-      <img src={stumps} className="stumps" alt="stumps" />
+      {/* Animated Stars */}
+      <div className="stars">
+        {[...Array(50)].map((_, i) => (
+          <div
+            key={i}
+            className="star"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 2}s`,
+            }}
+          />
+        ))}
+      </div>
 
       {/* LOGIN BUTTON */}
       <button
@@ -212,7 +214,7 @@ export default function MultiplayerScreen({ API_BASE, onAction }) {
               <button type="submit" className="login-btn">Login</button>
 
               <p className="switch-text">
-                Don’t have an account? <span onClick={() => setIsSignup(true)}>Sign up</span>
+                Don't have an account? <span onClick={() => setIsSignup(true)}>Sign up</span>
               </p>
             </form>
           ) : (

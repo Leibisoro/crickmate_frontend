@@ -16,8 +16,7 @@ function App() {
   const [gameResult, setGameResult] = useState(null);
 
   // ✅ Backend Link
-  const base = import.meta.env.VITE_API_URL;
-
+  const API_BASE = import.meta.env.VITE_API_URL;
 
   const handleGameComplete = (resultData) => {
     setGameResult(resultData);
@@ -63,6 +62,9 @@ function App() {
         <MultiplayerTossScreen
           onAction={setScreen}
           setGameSettings={handleMultiplayerGameStart}
+          roomCode={localStorage.getItem("roomCode")}
+          isHost={localStorage.getItem("isHost") === "true"}
+          username={localStorage.getItem("username")}
         />
       )}
 

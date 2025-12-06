@@ -1,34 +1,10 @@
+/* NIGHT SKY BACKGROUND */
 .toss-container {
   position: relative;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-}
-
-/* Updated background to be full-screen and responsive */
-.toss-background {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-}
-
-/* Stadium lights removed - no longer needed */
-
-.toss-stumps {
-  position: absolute;
-  bottom: 50px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 180px;
-  z-index: 3;
-}
-
-/* Make sure all content appears above background */
-.toss-container > * {
-  position: relative;
+  background: linear-gradient(to bottom, #000428, #004e92);
   z-index: 1;
 }
 
@@ -45,16 +21,16 @@
 
 .toss-star {
   position: absolute;
-  width: 2px;
-  height: 2px;
+  width: 3px;
+  height: 3px;
   background: white;
   border-radius: 50%;
-  animation: toss-twinkle 3s infinite ease-in-out;
+  animation: toss-twinkle 2s infinite ease-in-out;
 }
 
 @keyframes toss-twinkle {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.5); }
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
 }
 
 /* Common Title Styling */
@@ -102,10 +78,13 @@
   position: relative;
   transition: all 0.3s ease;
   animation: toss-ball-appear 0.8s ease-out;
+  background: rgba(255,255,255,0.1);
+  border: 2px solid white;
 }
 
 .toss-cricket-ball:hover {
   transform: rotate(10deg) scale(1.1);
+  background: rgba(255,255,255,0.25);
 }
 
 .toss-ball-text {
@@ -143,6 +122,33 @@
   max-width: 700px;
 }
 
+/* Circle number styling for step 2 */
+.circle-number {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  animation: toss-number-appear 0.6s ease-out;
+  animation-fill-mode: both;
+  background: rgba(255,255,255,0.1);
+  border: 3px solid white;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.circle-number:hover {
+  transform: scale(1.2);
+  background: rgba(255,255,255,0.25);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
 .toss-number-ball {
   width: 120px;
   height: 120px;
@@ -155,10 +161,13 @@
   transition: all 0.3s ease;
   animation: toss-number-appear 0.6s ease-out;
   animation-fill-mode: both;
+  background: rgba(255,255,255,0.1);
+  border: 2px solid white;
 }
 
 .toss-number-ball:hover {
   transform: scale(1.15);
+  background: rgba(255,255,255,0.25);
 }
 
 .toss-number-text {
@@ -177,20 +186,25 @@
 
 /* Step 3: Result Animation */
 .toss-step3 {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
   z-index: 10;
+  width: 100%;
 }
 
 .toss-battle-arena {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 900px;
-  height: 300px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 60px;
+  width: 100%;
+  max-width: 1000px;
 }
 
 .toss-player-side,
@@ -227,6 +241,8 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  background: rgba(255,255,255,0.1);
+  border: 2px solid white;
 }
 
 .toss-result-number {
@@ -243,7 +259,6 @@
   flex-direction: column;
   align-items: center;
   gap: 15px;
-  animation: toss-calc-appear 2s ease-out 1s both;
 }
 
 .toss-calc-line {
@@ -282,37 +297,46 @@
 }
 
 .toss-final-result {
-  position: absolute;
-  top: 65%;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: toss-result-appear 2.5s ease-out 1.5s both;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .toss-win-text {
-  color: #FFD700;
+  color: #00ff90;
   font-size: 48px;
   font-weight: bold;
-  text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+  text-shadow: 0 0 20px rgba(0, 255, 144, 0.8);
   animation: toss-golden-glow 2s ease-in-out infinite;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 
 .toss-lose-text {
-  color: #FF4444;
+  color: #ff4d4d;
   font-size: 48px;
   font-weight: bold;
-  text-shadow: 0 0 20px rgba(255, 68, 68, 0.8);
+  text-shadow: 0 0 20px rgba(255, 77, 77, 0.8);
   animation: toss-red-glow 2s ease-in-out infinite;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 
 @keyframes toss-golden-glow {
-  0%, 100% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
-  50% { text-shadow: 0 0 40px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 215, 0, 0.6); }
+  0%, 100% { text-shadow: 0 0 20px rgba(0, 255, 144, 0.8); }
+  50% { text-shadow: 0 0 40px rgba(0, 255, 144, 1), 0 0 60px rgba(0, 255, 144, 0.6); }
 }
 
 @keyframes toss-red-glow {
-  0%, 100% { text-shadow: 0 0 20px rgba(255, 68, 68, 0.8); }
-  50% { text-shadow: 0 0 40px rgba(255, 68, 68, 1), 0 0 60px rgba(255, 68, 68, 0.6); }
+  0%, 100% { text-shadow: 0 0 20px rgba(255, 77, 77, 0.8); }
+  50% { text-shadow: 0 0 40px rgba(255, 77, 77, 1), 0 0 60px rgba(255, 77, 77, 0.6); }
 }
 
 @keyframes toss-result-appear {
@@ -320,43 +344,42 @@
   to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
 }
 
-/* Move next/controls so they appear above stumps */
+/* Move next/controls to bottom center */
 .toss-action-buttons {
-  position: fixed;
-  bottom: 300px;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 100%;
   display: flex;
+  justify-content: center;
   gap: 30px;
-  animation: toss-buttons-appear 0.6s ease-out both;
+  margin-top: 40px;
   z-index: 20;
 }
 
 .toss-proceed-btn,
 .toss-home-btn {
-  padding: 15px 30px;
+  padding: 15px 40px;
   font-size: 20px;
   font-weight: bold;
   border: none;
-  border-radius: 10px;
+  border-radius: 30px;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 .toss-proceed-btn {
-  background: linear-gradient(45deg, #28a745, #20c997);
+  background: linear-gradient(45deg, #00ff90, #00d4ff);
   color: white;
 }
 
 .toss-home-btn {
-  background: linear-gradient(45deg, #007bff, #00c6ff);
+  background: rgba(255,255,255,0.2);
   color: white;
+  border: 2px solid white;
 }
 
 .toss-proceed-btn:hover,
 .toss-home-btn:hover {
-  transform: translateY(-3px);
+  transform: scale(1.1);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
@@ -381,86 +404,234 @@
   50% { opacity: 1; transform: scale(1.6); }
 }
 
-/* Settings Buttons (Overs/Wickets + Bat/Bowl) */
+/* Settings Buttons (Overs/Wickets) */
 .toss-setting-btn {
   padding: 20px 40px;
   font-size: 22px;
   font-weight: bold;
-  border: none;
+  border: 2px solid white;
   border-radius: 12px;
-  background: linear-gradient(45deg, #007bff, #00c6ff);
+  background: rgba(255,255,255,0.1);
   color: white;
   cursor: pointer;
-  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
   transition: all 0.3s ease;
 }
 
 .toss-setting-btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(0, 123, 255, 0.6);
+  background: rgba(255,255,255,0.25);
 }
 
 /* Highlight selected overs/wickets */
 .toss-setting-btn.selected {
-  background: linear-gradient(45deg, #ff9800, #ffb74d);
-  color: white;
+  background: white;
+  color: black;
   transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(255, 152, 0, 0.8);
 }
 
-/* Cricket ball PNG styling */
-.toss-ball-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  animation: spin 6s linear infinite;
-  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* Bat/Bowl choice images */
-.toss-choice-images {
-  display: flex;
-  justify-content: center;
-  gap: 100px;
-  margin-top: 50px;
-  z-index: 10;
-}
-
-.choice-img {
-  width: 180px;
-  height: auto;
+/* Circle buttons for settings */
+.circle-btn {
+  background: rgba(255,255,255,0.1);
+  border: 2px solid white;
+  color: white;
+  padding: 20px;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  font-size: 1.4rem;
   cursor: pointer;
-  transition: all 0.28s cubic-bezier(.2,.9,.2,1);
-  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.5));
-  border-radius: 12px;
-  transform-origin: center;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.choice-img:hover {
+.circle-btn:hover {
+  background: rgba(255,255,255,0.25);
   transform: scale(1.12);
-  filter: drop-shadow(0 0 30px rgba(0, 180, 255, 0.95));
 }
 
-.choice-img.selected {
-  transform: scale(1.18);
-  filter: drop-shadow(0 0 45px rgba(0, 180, 255, 1));
+.circle-btn.selected {
+  background: white;
+  color: black;
 }
 
-/* Faded background highlight when chosen */
-.highlight-img {
+/* Confirm and Do Toss button in Step 0 */
+.toss-step1 .toss-proceed-btn {
+  margin-top: 30px;
+  padding: 15px 40px;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 30px;
+  background: white;
+  color: black;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 15px rgba(255, 255, 255, 0.3);
+}
+
+.toss-step1 .toss-proceed-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.5);
+}
+
+/* Big circles for Odd/Even */
+.circle-big {
+  background: rgba(255,255,255,0.1);
+  border: 2px solid white;
+  color: white;
+  padding: 30px;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.circle-big:hover {
+  background: rgba(255,255,255,0.25);
+  transform: scale(1.12);
+}
+
+/* Bat/Bowl choice rectangles */
+.choice-rect {
+  background: rgba(255,255,255,0.1);
+  border: 2px solid white;
+  color: white;
+  padding: 20px 40px;
+  border-radius: 12px;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: 0.2s;
+  font-weight: bold;
+}
+
+.choice-rect:hover {
+  background: rgba(255,255,255,0.25);
+  transform: scale(1.1);
+}
+
+.choice-rect.selected {
+  background: white;
+  color: black;
+}
+
+/* Result Box */
+.result-box {
+  background: rgba(255,255,255,0.2);
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  color: white;
+}
+
+/* NEW: Toss Result Display - Step 3 */
+.toss-result-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  margin: 40px 0;
+}
+
+.toss-player-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.toss-emoji {
+  font-size: 60px;
+}
+
+.toss-label {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.toss-ball-display {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(220, 38, 38, 0.9);
+  border: 4px solid #991b1b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.toss-ball-display::before {
+  content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 4;
-  opacity: 0.12;
-  width: 80vw;
-  max-width: 900px;
-  filter: blur(6px) saturate(1.1);
+  width: 80%;
+  height: 2px;
+  background: #991b1b;
+  top: 30%;
+  transform: rotate(-15deg);
+}
+
+.toss-ball-display::after {
+  content: '';
+  position: absolute;
+  width: 80%;
+  height: 2px;
+  background: #991b1b;
+  bottom: 30%;
+  transform: rotate(15deg);
+}
+
+.toss-calculation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.calc-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 215, 0, 0.3);
+  border: 3px solid #FFD700;
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.calc-op {
+  color: #FFD700;
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0 5px;
+}
+
+.calc-parity {
+  color: #FFD700;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 5px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  width: 100%;
+  text-align: center;
 }
