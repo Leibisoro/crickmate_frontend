@@ -13,7 +13,7 @@ export default function MultiplayerScreen({ API_BASE, onAction }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const base = import.meta.env.VITE_API_URL;
+  const base = "https://crickmatebackend-production.up.railway.app";
 
   useEffect(() => {
     const savedRoom = localStorage.getItem("roomCode");
